@@ -1,7 +1,6 @@
-.vagrant
-public/*
-Cheffile.lock
-Gemfile.lock
-cookbooks/
-.idea
 tmp
+*.lock
+cookbooks
+.idea
+.vagrant
+www/hw2/files
