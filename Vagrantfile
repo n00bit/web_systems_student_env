@@ -1,6 +1,8 @@
 #   Install with command
 
-vagrant plugin 'vagrant-hostsupdater'
+unless Vagrant.has_plugin?('vagrant-hostsupdater')
+    raise 'Install vagrant hostsupdater pluging with command "vagrant plugin install vagrant-hostsupdater"'
+end
 
 Vagrant.configure("2") do |config|
   config.vm.define "webserver" do |machine|
