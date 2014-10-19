@@ -76,3 +76,129 @@ Password: vagrant
 Для управлением версиями БД предлагается использовать [Phinx] (http://phinx.org)
 
 
+### Создание миграции
+
+Для создания новой миграции выполните команды на виртуалке
+
+`$ cd /vagrant`
+`$ ./phinx create {Migration name}`
+
+{Migration name} должна быть в стиле [CamelCase] (https://ru.wikipedia.org/wiki/CamelCase) и уникальна в рамках миграций вашего проекта.
+Просьба {Migration name} выбирать таким образом, что бы описать суть миграции.
+
+Далее в папке migrations вы найдете файл с соотвествующим названием.
+В нем будет класс с методом up. В этом методе описываете ваш код миграции.
+
+Например 
+
+`$ ./phinx create CreateUserTable`
+
+```php
+<?php
+
+use Phinx\Migration\AbstractMigration;
+
+class CreateUserTable extends AbstractMigration
+{
+    /**
+     * Change Method.
+     *
+     * More information on this method is available here:
+     * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
+     * Uncomment this method if you would like to use it.
+     *
+    public function change()
+    {
+    }
+    */
+    
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+    
+    }
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
+
+    }
+}
+```
+
+Добавляем SQL создания таблицы
+
+```php
+<?php
+
+use Phinx\Migration\AbstractMigration;
+
+class CreateUserTable extends AbstractMigration
+{
+    /**
+     * Change Method.
+     *
+     * More information on this method is available here:
+     * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
+     * Uncomment this method if you would like to use it.
+     *
+    public function change()
+    {
+    }
+    */
+    
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+      $sql = <<<SQL
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `teeeste` varchar(52) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_user` (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+SQL;
+      $this->execute($sql);      
+    }
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
+
+    }
+}
+```
+
+### Запуск миграций
+
+Для выполнения миграции на вашей машине выполните в консоли виртуалки следующие команды.
+
+`$ cd /vagrant`
+`$ ./phinx migrate`
+
+
+### Дополнительные ограничения
+
+Phinx предоставляет API для описания изменений с БД.
+Например [такое] (http://docs.phinx.org/en/latest/migrations.html#the-change-method)
+
+В рамках данного проекта допускается использование только методов которые требуют в качестве входных данных SQL.
+
+Например 
+
+```php
+        $count = $this->execute('DELETE FROM users'); // returns the number of affected rows
+        $rows = $this->query('SELECT * FROM users'); // returns the result as an array
+```
+
