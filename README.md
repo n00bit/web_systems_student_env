@@ -42,7 +42,7 @@ Web systems student environment
 - Принять [Pull Request] (https://help.github.com/articles/merging-a-pull-request/) сделаный преподавателем в ваш репозиторий.
 - `$ git pull` - Или любой другой способ забрать последную версию кода
 - `$ vagrant destroy` - уничтожение текущей виртуалки. ВНИМАНИЕ: все данные в БД будут потеряны. Если нужно сделайте предварительно дамп БД.
-- `$ vagrant box remove webdeb` - Удаление текущего базового образа
+- `$ vagrant box remove webdb` - Удаление текущего базового образа
 - `$ vagrant up` - Создание виртуалки. Vagrant сам скачает новую версию базового образа.
  
 # Виртуальные хосты
