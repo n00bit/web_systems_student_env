@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
     machine.hostsupdater.aliases = ["phpmyadmin.dev", "webdb.dev", "phppgadmin.dev"]
     machine.vm.network :private_network, ip: "10.0.0.10"
 
-    machine.vm.synced_folder ".", "/vagrant", :disabled => true, :nfs => true
+    machine.vm.synced_folder ".", "/vagrant", :disabled => false, :nfs => true
     machine.vm.synced_folder "./www", "/var/www", :disabled => false, :nfs => true
 
     machine.vm.provider :virtualbox do |vb, override|
