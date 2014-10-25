@@ -20,6 +20,7 @@ Web systems student environment
 - [VirtualBox] (https://www.virtualbox.org/) 
 - [Vagrant] (https://www.vagrantup.com/) Рекомендуемая версия 1.4.0 работает стабильно. 
 - Vagrant hosts updater
+- Vagrant Vbox Guest edition
 
 ## Установка Vagrant HostsUpdater
 
@@ -27,6 +28,13 @@ Web systems student environment
 
 `$ vagrant plugin install vagrant-hostsupdater`
 
+
+
+## Установка Vagrant Vbox Guest edition
+
+После установки Vagrant выполните в консоле команду
+
+`$ vagrant plugin install vagrant-vbguest`
 
 ## Подробное описание установки и конфигурирования необходимого ПО
 
