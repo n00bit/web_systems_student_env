@@ -33,7 +33,7 @@ while [ -h "$SELF_PATH" ]; do
 done
 
 # Build the path to phinx.php.
-SCRIPT_PATH="`dirname "$SELF_PATH"`/vendor/bin/phinx"
+SCRIPT_PATH="`dirname "$SELF_PATH"`/vendor/robmorgan/phinx/bin/phinx"
 if [ -n "$CYGWIN" ] ; then
   SCRIPT_PATH="`cygpath -u -a -- "$SCRIPT_PATH"`"
 fi
