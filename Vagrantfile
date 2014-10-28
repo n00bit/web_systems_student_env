@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
       vb.customize ["modifyvm", :id, "--memory", "256"]
       vb.customize ["modifyvm", :id, "--cpus", "1"]
       override.vm.box = "webdb"
-      override.vm.box_url = "https://www.dropbox.com/s/0xpg43gala60ued/webdb.box?dl=1"
+      override.vm.box_url = "https://www.dropbox.com/s/jlj6vn0upzho4xf/webdb.box?dl=1"
     end
   end
 end
