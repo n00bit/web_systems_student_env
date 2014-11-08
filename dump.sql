@@ -14,7 +14,7 @@ USE `mydb` ;
 -- -----------------------------------------------------
 -- Table `mydb`.`service`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS service` (
+CREATE TABLE IF NOT EXISTS `service` (
   `id` INT(2) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(155) NOT NULL,
   `desc` TEXT NOT NULL,
