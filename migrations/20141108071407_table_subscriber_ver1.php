@@ -12,18 +12,18 @@ class TableSubscriberVer1 extends AbstractMigration
      *
      * Uncomment this method if you would like to use it.
      *
-    public function change()
-    {
-    }
-    */
-    
+     * public function change()
+     * {
+     * }
+     */
+
     /**
      * Migrate Up.
      */
     public function up()
     {
         $sql = <<<SQL
-CREATE TABLE IF NOT EXISTS `subscriber` (
+  CREATE TABLE IF NOT EXISTS `subscriber` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `subscriber` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 SQL;
-        $this -> execute($sql);
+        $this->execute($sql);
     }
 
     /**

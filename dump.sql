@@ -8,13 +8,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+CREATE SCHEMA IF NOT EXISTS `webdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`service`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`service` (
+CREATE TABLE IF NOT EXISTS service` (
   `id` INT(2) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(155) NOT NULL,
   `desc` TEXT NOT NULL,
@@ -27,7 +27,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`subscriber`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`subscriber` (
+CREATE TABLE IF NOT EXISTS `subscriber` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
@@ -52,21 +52,21 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`service_info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`service_info` (
+CREATE TABLE IF NOT EXISTS `service_info` (
   `begin_date` DATE NOT NULL,
   `end_date` DATE NULL,
   `service_id` INT(2) UNSIGNED NOT NULL,
   `subscriber_id` INT(5) UNSIGNED NOT NULL,
   INDEX `service_id_idx` (`service_id` ASC),
   INDEX `subscriber_id_idx` (`subscriber_id` ASC),
-  CONSTRAINT `service_id`
+  CONSTRAINT `con_service_id`
     FOREIGN KEY (`service_id`)
-    REFERENCES `mydb`.`service` (`id`)
+    REFERENCES `webdb`.`service` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `subscriber_id`
+  CONSTRAINT `con_subscriber_id`
     FOREIGN KEY (`subscriber_id`)
-    REFERENCES `mydb`.`subscriber` (`id`)
+    REFERENCES `webdb`.`subscriber` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -75,7 +75,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`tariff`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`tariff` (
+CREATE TABLE IF NOT EXISTS `tariff` (
   `id` INT(2) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(155) NOT NULL,
   `desc` TEXT NOT NULL,
@@ -88,7 +88,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`staff`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`staff` (
+CREATE TABLE IF NOT EXISTS `staff` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(150) NOT NULL,
   `surname` VARCHAR(150) NOT NULL,
@@ -107,7 +107,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`ticket`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`ticket` (
+CREATE TABLE IF NOT EXISTS `ticket` (
   `id` INT(4) NOT NULL AUTO_INCREMENT,
   `subscriber_id` INT(5) UNSIGNED NOT NULL,
   `operator_id` INT(5) UNSIGNED NOT NULL,
@@ -117,14 +117,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ticket` (
   `ratig_quality` INT(5) UNSIGNED NOT NULL DEFAULT 0,
   `status` ENUM('OPEN','CLOSED') NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `subscriber_id`
+  CONSTRAINT `con_subscriber_ida`
     FOREIGN KEY (`subscriber_id`)
-    REFERENCES `mydb`.`subscriber` (`id`)
+    REFERENCES `subscriber` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `operator_id`
     FOREIGN KEY (`operator_id`)
-    REFERENCES `mydb`.`staff` (`id`)
+    REFERENCES `staff` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -133,14 +133,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`message`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`message` (
+CREATE TABLE IF NOT EXISTS `message` (
   `id` INT(4) NOT NULL AUTO_INCREMENT,
   `text` TEXT NOT NULL,
   `date` DATE NOT NULL,
   `direct` ENUM('ABON','OPERAT') NOT NULL,
   `ticket_id` INT(4) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `ticket_id`
+  CONSTRAINT `con_ticket_id`
     FOREIGN KEY (`ticket_id`)
     REFERENCES `mydb`.`ticket` (`id`)
     ON DELETE NO ACTION
@@ -151,7 +151,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`brigade`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`brigade` (
+CREATE TABLE IF NOT EXISTS `brigade` (
   `id` INT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
@@ -166,21 +166,21 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`tariff_info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`tariff_info` (
+CREATE TABLE IF NOT EXISTS `tariff_info` (
   `begin_date` DATE NOT NULL,
   `end_date` DATE NULL,
   `tariff_id` INT(2) NOT NULL,
   `subscriber_id` INT(5) UNSIGNED NOT NULL,
   INDEX `subscriber_id_idx` (`subscriber_id` ASC),
   INDEX `tariff_id_idx` (`tariff_id` ASC),
-  CONSTRAINT `subscriber_id`
+  CONSTRAINT `con_subscriber_idb`
     FOREIGN KEY (`subscriber_id`)
-    REFERENCES `mydb`.`subscriber` (`id`)
+    REFERENCES `subscriber` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `tariff_id`
+  CONSTRAINT `con_tariff_id`
     FOREIGN KEY (`tariff_id`)
-    REFERENCES `mydb`.`tariff` (`id`)
+    REFERENCES `tariff` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -189,15 +189,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`balance`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`balance` (
+CREATE TABLE IF NOT EXISTS `balance` (
   `summ` INT(4) NOT NULL DEFAULT 0,
   `date` DATE NOT NULL,
   `type` ENUM('dengi','bonuce') NOT NULL,
   `subscriber_id` INT(5) UNSIGNED NOT NULL,
   INDEX `subscriber_id_idx` (`subscriber_id` ASC),
-  CONSTRAINT `subscriber_id`
+  CONSTRAINT `con_subscriber_idc`
     FOREIGN KEY (`subscriber_id`)
-    REFERENCES `mydb`.`subscriber` (`id`)
+    REFERENCES `subscriber` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -206,7 +206,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`request_card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`request_card` (
+CREATE TABLE IF NOT EXISTS `request_card` (
   `id` INT(5) NOT NULL AUTO_INCREMENT,
   `subscriber_id` INT(5) UNSIGNED NOT NULL,
   `operator_id` INT(5) UNSIGNED NULL,
@@ -224,19 +224,19 @@ CREATE TABLE IF NOT EXISTS `mydb`.`request_card` (
   PRIMARY KEY (`id`),
   INDEX `operator_id_idx` (`operator_id` ASC),
   INDEX `subscriber_id_idx` (`subscriber_id` ASC),
-  CONSTRAINT `subscriber_id`
+  CONSTRAINT `con_subscriber_idd`
     FOREIGN KEY (`subscriber_id`)
-    REFERENCES `mydb`.`subscriber` (`id`)
+    REFERENCES `subscriber` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `operator_id`
     FOREIGN KEY (`operator_id`)
-    REFERENCES `mydb`.`staff` (`id`)
+    REFERENCES `staff` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `brigade_id`
     FOREIGN KEY (`brigade_id`)
-    REFERENCES `mydb`.`brigade` (`id`)
+    REFERENCES `brigade` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -245,7 +245,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`rate_staff`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`rate_staff` (
+CREATE TABLE IF NOT EXISTS `rate_staff` (
   `idrate_staff` INT NOT NULL,
   PRIMARY KEY (`idrate_staff`))
 ENGINE = InnoDB;
