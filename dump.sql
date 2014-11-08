@@ -241,16 +241,6 @@ CREATE TABLE IF NOT EXISTS `request_card` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`rate_staff`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `rate_staff` (
-  `idrate_staff` INT NOT NULL,
-  PRIMARY KEY (`idrate_staff`))
-ENGINE = InnoDB;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
