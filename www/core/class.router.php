@@ -6,6 +6,14 @@
  * Date: 12.11.2014
  * Time: 11:16
  */
+/**
+ *  Example routing
+ *                                  nameController    action
+ * $mux->post('/product/:id', ['ProductController','updateAction'] , [
+ * 'require' => [ 'id' => '\d+', ],
+ * 'default' => [ 'id' => '1', ]
+ * **/
+
 class Router
 {
 
@@ -58,8 +66,3 @@ class Router
         }
     }
 }
-/**                              nameController    action
- * $mux->post('/product/:id', ['ProductController','updateAction'] , [
- * 'require' => [ 'id' => '\d+', ],
- * 'default' => [ 'id' => '1', ]
- * **/
