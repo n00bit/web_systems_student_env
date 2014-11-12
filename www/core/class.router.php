@@ -17,49 +17,60 @@
 class Router
 {
 
-    private static $routes = array();
+    private $routes = null;
+    private static $_instance = null;
 
-    public function any()
+    private function __construct()
     {
+        $this->routes = array();
     }
 
-    public function get($pattern, $call_method, $pattern_params)
+    public static function getInstance()
     {
-        $ready_pattern = $pattern . '/' . $pattern_params;
-        $this->set('GET ', $ready_pattern, $call_method);
-    }
-
-    public function post($pattern, $call_method, $pattern_params)
-    {
-        $ready_pattern = $pattern . '/' . $pattern_params;
-        $this->set('GET ', $ready_pattern, $call_method);
+        if (is_null(self::$_instance)) {
+            self::$_instance = new Router();
+        }
+        return self::$_instance;
     }
 
 
-    private function set($type_request, $pattern, $callback)
+    public function get($pattern, $callback)
+    {
+        $this->set('GET', $pattern, $callback);
+    }
+
+    public function post($pattern, $callback)
+    {
+        $this->set('POST', $pattern, $callback);
+    }
+
+    private function set($type, $pattern, $callback)
     {
         if (!function_exists($callback)) {
             new Exception("Method $callback not exists");
         }
-        self::$routes[$type_request][$pattern] = $callback;
+        $this->routes[$type][$pattern] = $callback;
     }
-                        /**    GET/POST    product/id/1 **/
-    public function process($method, $uri) {
+
+
+    public function process($method, $uri)
+    {
         if (in_array($method, array('GET', 'POST'))) {
             new Exception("Request method should be GET or POST");
         }
 
-        // Выполнение роутинга
-        // Используем роуты $routes['GET'] или $routes['POST']  в зависимости от метода HTTP.
-        $active_routes = self::$routes[$method];
+// Выполнение роутинга
+// Используем роуты $routes['GET'] или $routes['POST']  в зависимости от метода HTTP.
+        $active_routes = $this->routes[$method];
 
-        // Для всех роутов
+// Для всех роутов
         foreach ($active_routes as $pattern => $callback) {
-            // Если REQUEST_URI соответствует шаблону - вызываем функцию
-            if (preg_match_all("/$pattern/", $uri, $matches) !== false) {
-                // вызываем callback
+// Если REQUEST_URI соответствует шаблону - вызываем функцию
+            if (preg_match_all("/$pattern/", $uri, $matches) !== 0) {
+// вызываем callback
+                var_dump($callback);
                 $callback();
-                // выходим из цикла
+// выходим из цикла
                 break;
             }
             $matches = array();
