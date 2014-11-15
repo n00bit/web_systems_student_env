@@ -29,6 +29,11 @@ Class Test
 
 //$r->get('/cool/:id', 'cool_callback2',['require' => [':id' => '\d+']]);
 
+    function teatFunction()
+    {
+        print "CHIERF, ALL IS LOST, CHIERF!!";
+    }
+
     function cool_callback2($id)
     {
         print "Hello World $id";
