@@ -11,9 +11,9 @@ Class Test
         $r = Router::getInstance();
     }
 
-    function home()
+    function home($id)
     {
-        print "Hello World";
+        print "Hello World $id";
     }
 
     function home_post()
@@ -34,8 +34,8 @@ Class Test
         print "CHIERF, ALL IS LOST, CHIERF!!";
     }
 
-    function cool_callback2($id)
+    function riseFunc()
     {
-        print "Hello World $id";
+        print "It's a life!";
     }
 }

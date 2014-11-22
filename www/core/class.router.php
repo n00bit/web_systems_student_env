@@ -36,39 +36,22 @@ class Router
     }
 
 
-    public function get($pattern, $callback, $pattern_params)
+
+    public function get($pattern, $callback, $pattern_params = array())
     {
-        $ready_pattern = $pattern;
-        var_dump($pattern_params);
-        foreach($pattern_params as $value)
-        {
-            $ready_pattern = $ready_pattern.'\/'.$value;
-            print "LOL!";
-        }
-
-//$ready_pattern = $pattern . '\/' . $pattern_params;
-        $this->set('GET', $ready_pattern, $callback);
+        $this->set('GET', $pattern, $callback, $pattern_params);
     }
-
-//    public function get($pattern, $callback)
-//    {
-//        $ready_pattern = $pattern;
-//        print $ready_pattern;
-//        $this->set('GET', $ready_pattern, $callback);
-//      }
 
     public function post($pattern, $callback, $pattern_params)
     {
-
-        $ready_pattern = $pattern . '\/' . $pattern_params;
-        $this->set('POST', $pattern, $callback);
+        $this->set('POST', $pattern, $callback, $pattern_params);
     }
 
-    private function set($type, $pattern, $callback)
+    private function set($type, $pattern, $callback, $pattern_params = array())
     {
+        $pattern = $this->constructPuttern($pattern, $pattern_params);
         if (is_array($callback)) {
             if (!method_exists($callback[0], $callback[1])) {
-                //if(!function_exists($callback)){
                 new Exception("Method $callback[1] not exists");
             }
         } else {
@@ -76,16 +59,6 @@ class Router
         }
         $this->routes[$type][$pattern] = $callback;
     }
-
-//    private function set($type, $pattern, $callback)
-//    {
-
-//        if (!function_exists($callback)) {
-//           new Exception("Method $callback not exists");
-//        }
-//        $this->routes[$type][$pattern] = $callback;
-//    }
-
 
     public function process($method, $uri)
     {
@@ -102,14 +75,41 @@ class Router
 // Если REQUEST_URI соответствует шаблону - вызываем функцию
             if (preg_match_all("/$pattern/", $uri, $matches) !== 0) {
 // вызываем callback
-
+                $posable_parametr = array();
+                foreach(array_slice($matches,1) as $value){
+                    $posable_parametr[] = array_pop($value);
+                }
                 $e = new $callback[0]();
-                $e->$callback[1]();
-
+                call_user_func_array(array($e, $callback[1]), $posable_parametr);
 // выходим из цикла
                 break;
             }
             $matches = array();
         }
     }
+
+    /**
+     * @param $pattern
+     * @param $pattern_params
+     * @param $matches
+     * @return mixed
+     */
+    private function constructPuttern($pattern, $pattern_params)
+    {
+        $pattern = str_replace('/', '\/', $pattern);
+        //документация!!!!
+
+        preg_match_all("/(?<=:)[a-zA-Z0-9]++/", $pattern, $matches);
+        foreach ($matches[0] as $value) {
+            if(array_key_exists($value, $pattern_params)) {
+                $arg_rex_exp = $pattern_params[$value];
+                $pattern = str_replace(":$value", "($arg_rex_exp)", $pattern);
+            }
+        }
+        $pattern = "^$pattern$";
+        return $pattern;
+    }
 }
+
+
+///
