@@ -2,22 +2,18 @@
 
 // ------ index.php-------------------------
 #Подгрузка файла с модулями
-include_once 'core/class.router.php';
-include_once 'core/modules/module.load.php';
+include_once 'module.load.php';
 #Подгрузка модулей роутинга
-modules_load_routes();
-print "ALL IS LOST!\n";
+$loader = new Loader();
+$loader->load_all_modules();
 
-$r = Router::getInstance();
-$r->process($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
-
-
+print "EVERYTHING IS LOST, CHIEF, EVERYTHING!!!\n";
 
 //$test_array=array(
 //    0=>"Test",
-//    1=>"teatFunction"
+//    1=>"riseFunc"
 //);
-
+//
 //function test($parametr)
 //{
 //    if(is_array($parametr))
@@ -26,5 +22,15 @@ $r->process($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 //        $test_obj->$parametr[1]();
 //    }
 //}
-
+//
 //test($test_array);
+
+testComplete();
+
+$r = Router::getInstance();
+$r->process($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+
+
+
+
+

@@ -20,8 +20,6 @@ class Router
     private $routes = null;
     private static $_instance = null;
 
-    private $input_classes = null;
-
     private function __construct()
     {
         $this->routes = array();
@@ -49,21 +47,20 @@ class Router
 
     private function set($type, $pattern, $callback, $pattern_params = array())
     {
-        $pattern = $this->constructPuttern($pattern, $pattern_params);
-        if (is_array($callback)) {
-            if (!method_exists($callback[0], $callback[1])) {
-                new Exception("Method $callback[1] not exists");
-            }
-        } else {
-            new Exception("It's not array!");
+        $pattern = $this->constructPattern($pattern, $pattern_params);
+        if(!is_array($callback)){
+            throw new Exception("It's not array!");
+        }
+        if (!method_exists($callback[0], $callback[1])) {
+            throw new Exception("Method $callback[1] not exists");
         }
         $this->routes[$type][$pattern] = $callback;
     }
 
     public function process($method, $uri)
     {
-        if (in_array($method, array('GET', 'POST'))) {
-            new Exception("Request method should be GET or POST");
+        if (!in_array($method, array('GET', 'POST'))) {
+            throw new Exception("Request method should be GET or POST");
         }
 
 // Выполнение роутинга
@@ -75,12 +72,12 @@ class Router
 // Если REQUEST_URI соответствует шаблону - вызываем функцию
             if (preg_match_all("/$pattern/", $uri, $matches) !== 0) {
 // вызываем callback
-                $posable_parametr = array();
+                $posable_attribute = array();
                 foreach(array_slice($matches,1) as $value){
-                    $posable_parametr[] = array_pop($value);
+                    $posable_attribute[] = array_pop($value);
                 }
                 $e = new $callback[0]();
-                call_user_func_array(array($e, $callback[1]), $posable_parametr);
+                call_user_func_array(array($e, $callback[1]), $posable_attribute);
 // выходим из цикла
                 break;
             }
@@ -94,11 +91,10 @@ class Router
      * @param $matches
      * @return mixed
      */
-    private function constructPuttern($pattern, $pattern_params)
+    private function constructPattern($pattern, $pattern_params)
     {
         $pattern = str_replace('/', '\/', $pattern);
         //документация!!!!
-
         preg_match_all("/(?<=:)[a-zA-Z0-9]++/", $pattern, $matches);
         foreach ($matches[0] as $value) {
             if(array_key_exists($value, $pattern_params)) {

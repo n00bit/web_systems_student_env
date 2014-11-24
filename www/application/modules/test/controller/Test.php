@@ -11,6 +11,12 @@ Class Test
         $r = Router::getInstance();
     }
 
+
+    function testing()
+    {
+        print "Hello World";
+    }
+
     function home($id)
     {
         print "Hello World $id";
