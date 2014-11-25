@@ -22,13 +22,13 @@ Class Test
         print "Hello World $id";
     }
 
-    function home_post()
+    function homePost()
     {
         print "Hello World - POST";
     }
 
 
-    function cool_callback()
+    function coolCallback()
     {
         print "Goodbye World";
     }
@@ -43,5 +43,12 @@ Class Test
     function riseFunc()
     {
         print "It's a life!";
+    }
+
+    function callScream()
+    {
+        for($i=0;$i<10;$i++) {
+            print "ROUTING OR DEATH!!\n";
+        }
     }
 }

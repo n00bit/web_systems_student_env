@@ -25,7 +25,7 @@ print "EVERYTHING IS LOST, CHIEF, EVERYTHING!!!\n";
 //
 //test($test_array);
 
-testComplete();
+declareRouts();
 
 $r = Router::getInstance();
 $r->process($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
