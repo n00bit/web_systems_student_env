@@ -32,7 +32,7 @@ class StaffTableCreate extends AbstractMigration
   `gender` ENUM('F','M') NOT NULL,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `department` ENUM('OT1','OT2') NOT NULL,
+  `department` ENUM('OT1','OT2','OT3','ADM') NOT NULL,
   `position` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC))
