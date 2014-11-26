@@ -1,9 +1,6 @@
 <?php
 
 
-function declareRouts()
-{
-
     $r = Router::getInstance();
     $ar1=array('Test','home');
     $ar2=array('Test','coolCallback');
@@ -16,6 +13,5 @@ function declareRouts()
     $r->get('/user/:id/:cool', $ar1, $ar5);
     $r->post('/:end', $ar2, $ar5);
     $r->any('/:call', $ar6, $ar5);
-}
 
 
