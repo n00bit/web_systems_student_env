@@ -1,5 +1,64 @@
 <?php
-class User{
+/*
+ * Create Interfaces
+ *
+ * */
+
+interface IUserPersonalInfo{
+
+    public function getName();
+    public function getSurname();
+    public function getPatronymic();
+    public function getBrithday();
+    public function getGender();
+    public function getPhoneContact();
+
+    /**************SET**************/
+
+    public function setName();
+    public function setSurname();
+    public function setPatronymic();
+    public function setBrithday();
+    public function setGender();
+    public function setPhoneContact();
+
+/*}
+
+interface IUserPasportInfo{*/
+
+    public function getPasportSeries();
+    public function getPasportNumber();
+    public function getPasportDepartment();
+    public function getPasportAdress();
+    public function getPasportGetDate();
+
+    /**************SET**************/
+
+    public function setPasportSeries();
+    public function setPasportNumber();
+    public function setPasportDepartment();
+    public function setPasportAdress();
+    public function setPasportGetDate();
+
+}
+
+interface ILoginInfo{
+
+    public function getLogin();
+    public function getPassword();
+
+    /**************SET**************/
+
+    public function setLogin();
+    public function setPassword();
+
+}
+
+class User implements IUserPersonalInfo{
+
+    public function __construct($id){
+
+    }
 
     private $name = null;
     private $surname = null;
@@ -17,26 +76,80 @@ class User{
     private $email = null;
 
 
+    public function getName(){
+
+    }
+    public function getSurname(){
+
+    }
+    public function getPatronymic(){
+
+    }
+    public function getBrithday(){
+
+    }
+    public function getGender(){
+
+    }
+    public function getPhoneContact(){
+
+    }
+
+    public function getPasportSeries(){
+
+    }
+    public function getPasportNumber(){
+
+    }
+    public function getPasportDepartment(){
+
+    }
+    public function getPasportAdress(){
+
+    }
+    public function getPasportGetDate(){
+
+    }
+
+    /**************SET**************/
+
+    public function setName(){
+
+    }
+    public function setSurname(){
+
+    }
+    public function setPatronymic(){
+
+    }
+    public function setBrithday(){
+
+    }
+    public function setGender(){
+
+    }
+    public function setPhoneContact(){
+
+    }
+
+    public function setPasportSeries(){
+
+    }
+    public function setPasportNumber(){
+
+    }
+    public function setPasportDepartment(){
+
+    }
+    public function setPasportAdress(){
+
+    }
+    public function setPasportGetDate(){
+
+    }
+
+
 }
-
-interface IUserPersonalInfo{
-
-    public function getName();
-    public function getSurname();
-    public function getPatronymic();
-
-}
-
-interface IUserPasportInfo{
-
-    public function getPasportSeries();
-    public function getPasportNumber();
-    public function getPasportDepartment();
-    public function getPasportAdress();
-    public function getPasportGetDate();
-
-}
-
 
 
 /*    public function getName();
