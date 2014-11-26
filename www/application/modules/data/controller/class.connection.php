@@ -10,6 +10,12 @@ require_once 'ini.db.php';
 
 class Connections
 {
+
+    protected function __construct()
+    {
+        /*Поместить сюда подключение к БД*/
+    }
+
     static protected $_connection = null;
     static protected $_instance = null;
 

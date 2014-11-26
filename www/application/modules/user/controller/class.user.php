@@ -1,5 +1,6 @@
 <?php
 class User{
+
     private $name = null;
     private $surname = null;
     private $patronymic = null;
@@ -17,6 +18,27 @@ class User{
 
 
 }
+
+interface IUserPersonalInfo{
+
+    public function getName();
+    public function getSurname();
+    public function getPatronymic();
+
+}
+
+interface IUserPasportInfo{
+
+    public function getPasportSeries();
+    public function getPasportNumber();
+    public function getPasportDepartment();
+    public function getPasportAdress();
+    public function getPasportGetDate();
+
+}
+
+
+
 /*    public function getName();
     public function getSurname();
     public function getPatronymic();
@@ -32,3 +54,4 @@ class User{
     public function getEmail();
     public function getPassword();
 */
+

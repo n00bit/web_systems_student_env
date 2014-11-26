@@ -1,13 +1,17 @@
 <?php
+
 class Database
 {
     static protected $_instance;
     static protected $_connection;
+
     /*
      * Можно сделать переменную для сбора ошибок - массив.
      * @$data = array(); - ассоциативный массив.
      * Будем разбирать с помощью implode.
      * */
+
+
 
     public static function getInstance()
     {
