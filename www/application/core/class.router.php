@@ -43,7 +43,7 @@ class Router
         $this->set('GET', $pattern, $callback, $pattern_params);
     }
 
-    public function post($pattern, $callback, $pattern_params)
+    public function post($pattern, $callback, $pattern_params = array())
     {
         $this->set('POST', $pattern, $callback, $pattern_params);
     }
@@ -68,7 +68,9 @@ class Router
 
 // Выполнение роутинга
 // Используем роуты $routes['GET'] или $routes['POST']  в зависимости от метода HTTP.
+        var_dump($this->routes);
         $active_routes = $this->routes[$method] + $this->routes['ANY'];
+
 // Для всех роутов
         foreach ($active_routes as $pattern => $callback) {
 // Если REQUEST_URI соответствует шаблону - вызываем функцию
@@ -109,6 +111,3 @@ class Router
         return $pattern;
     }
 }
-
-
-///
