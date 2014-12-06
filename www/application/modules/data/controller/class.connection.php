@@ -6,49 +6,64 @@
  * Time: 21:19
  */
 
-require_once 'ini.db.php';
+//require_once 'ini.db.php';
 
 class Connections
 {
 
-    protected function __construct()
-    {
-        /*Поместить сюда подключение к БД*/
-    }
+    private $connection = null;//текущее соединеие
 
-    static protected $_connection = null;
-    static protected $_instance = null;
 
-    public static function getInstance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new Connections();
+    public function __construct(){//подключение к базе данных
+        $this->connection = mysqli_connect("172.33.10.50","root","root","webdb");
+        if(!$this->connection){
+
+            die ("Error of connecting to database!");
         }
-        return self::$_instance;
     }
 
-    private function _connectToDatabase()
-    {
-        $connection = null;
-        $connection = mysql_connect(DBSERVER, DBUSER, DBPASSWORD);
-        if (!$connection) {
-            die('Error connect DB: ' . mysql_error());
-        }
-        return $connection;
+    public function getConnection(){//вернуть соединение
+        return $this->connection;
     }
 
-    static public function setConnect()
-    {
-        if (!self::$_connection) {
-            self::$_connection = self::_connectToDatabase();
-        }
-        return self::$_connection;
+    public function killConnection(){//разоравть соединение к БД
+        close($this->connection);
+        $this->connection = null;
     }
 
-    static public function removeConnect()
-    {
-        mysql_close();
-        return self::$_connection = null;
-    }
+//    static protected $_connection = null;
+//    static protected $_instance = null;
+//
+//    public static function getInstance()
+//    {
+//        if (is_null(self::$_instance)) {
+//            self::$_instance = new Connections();
+//        }
+//        return self::$_instance;
+//    }
+//
+//    private function _connectToDatabase()
+//    {
+//        $connection = null;
+//        $connection = mysql_connect(DBSERVER, DBUSER, DBPASSWORD);
+//        if (!$connection) {
+//            die('Error connect DB: ' . mysql_error());
+//        }
+//        return $connection;
+//    }
+//
+//    static public function setConnect()
+//    {
+//        if (!self::$_connection) {
+//            self::$_connection = self::_connectToDatabase();
+//        }
+//        return self::$_connection;
+//    }
+//
+//    static public function removeConnect()
+//    {
+//        mysql_close();
+//        return self::$_connection = null;
+//    }
 
 }

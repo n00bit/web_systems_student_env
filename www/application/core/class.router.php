@@ -68,9 +68,8 @@ class Router
 
 // Выполнение роутинга
 // Используем роуты $routes['GET'] или $routes['POST']  в зависимости от метода HTTP.
-        var_dump($this->routes);
-        $active_routes = $this->routes[$method] + $this->routes['ANY'];
 
+        $active_routes = $this->routes[$method] + $this->routes['ANY'];
 // Для всех роутов
         foreach ($active_routes as $pattern => $callback) {
 // Если REQUEST_URI соответствует шаблону - вызываем функцию
@@ -100,6 +99,7 @@ class Router
     {
         $pattern = str_replace('/', '\/', $pattern);
         //документация!!!!
+
         preg_match_all("/(?<=:)[a-zA-Z0-9]++/", $pattern, $matches);
         foreach ($matches[0] as $value) {
             if(array_key_exists($value, $pattern_params)) {
