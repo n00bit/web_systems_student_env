@@ -65,7 +65,6 @@ class Router
         if (!in_array($method, array('GET', 'POST'))) {
             throw new Exception("Request method should be GET or POST");
         }
-
 // Выполнение роутинга
 // Используем роуты $routes['GET'] или $routes['POST']  в зависимости от метода HTTP.
 

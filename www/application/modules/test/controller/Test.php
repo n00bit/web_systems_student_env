@@ -51,4 +51,10 @@ Class Test
             print "ROUTING OR DEATH!!\n";
         }
     }
+
+    function veiwForms(){
+        print "I'm ready!";
+        include_once "Form.html";
+    }
+
 }

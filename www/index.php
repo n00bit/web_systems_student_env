@@ -1,9 +1,8 @@
 <form method="POST">
-    <input type = "yext" value = "Login" name="login">
+    <input type = "text" value = "Login" name="login">
     <input type = "test" value = "password" name = "password">
     <input type = "submit">
 </form>
-
 <?php
 // ------ index.php-------------------------
 #Подгрузка файла с модулями

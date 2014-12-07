@@ -8,18 +8,14 @@
 
 //require_once 'ini.db.php';
 
-class Connections
+class Connection
 {
 
     private $connection = null;//текущее соединеие
 
 
     public function __construct(){//подключение к базе данных
-        $this->connection = mysqli_connect("172.33.10.50","root","root","webdb");
-        if(!$this->connection){
-
-            die ("Error of connecting to database!");
-        }
+        $this->connection = mysqli_connect("172.33.10.50","root","root","webdb") or die ("Error of connecting to database!");
     }
 
     public function getConnection(){//вернуть соединение
@@ -27,7 +23,7 @@ class Connections
     }
 
     public function killConnection(){//разоравть соединение к БД
-        close($this->connection);
+        mysql_close($this->connection);
         $this->connection = null;
     }
 

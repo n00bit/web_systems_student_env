@@ -80,9 +80,8 @@ interface ILoginInfo
 class User implements IUserPersonalInfo
 {
 
-    public function __construct($id)
-    {
-
+    public function __construct($id){
+        print "Пользователь с номером ID $id";
     }
 
     private $name = null;
