@@ -33,11 +33,36 @@ class User
     }
 
     /*
-     *@$data - array*/
+     *@$data - assoc array*/
     private function loadData($data){
+
+        foreach($data as $key => $value)
+        {
+            switch($key)
+            {
+                case 'name':{
+                    $this->name = $value;
+                    break;
+                }
+                case 'surname':{
+                    $this->surname = $value;
+                    break;
+                }
+            }
+        }
 
     }
 
+    public function getName()
+    {
+        $name = $this->name;
+        return $name;
+    }
+    public function getSurName()
+    {
+        $surname = $this->surname;
+        return $surname;
+    }
 }
 
 class UserFactory
