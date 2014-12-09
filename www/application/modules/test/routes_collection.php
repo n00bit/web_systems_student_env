@@ -1,5 +1,15 @@
 <?php
 
+    function logTest(){
+        foreach($_COOKIE as $value){
+            if(!is_null($value)){
+                include_once "Form2.html";
+                return;
+            }
+        }
+    }
+
+logTest();
 
     $r = Router::getInstance();
     $ar1=array('Test','home');
@@ -15,5 +25,5 @@
     $r->get('/user/:id/:cool', $ar1, $ar5);
     $r->get('/:end', $ar2, $ar5);
     $r->any('/:call', $ar6, $ar5);
-    $r->any('/:author', $ar7, $ar5);
+    $r->get('/:author', $ar7, $ar5);
 
