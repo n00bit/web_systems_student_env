@@ -5,4 +5,4 @@
  * Date: 26.11.2014
  * Time: 10:52
  */
-    include_once "libs/Smarty.class.php";
+    include_once "libs/smarty/Smarty.class.php";
