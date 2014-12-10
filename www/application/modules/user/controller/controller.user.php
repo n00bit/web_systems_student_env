@@ -1,8 +1,10 @@
 <?php
 
 /*
- * Create Interfaces
- *
+ * Setter - устанавливает значения приватных полей класса.
+ * Getter - получает значения приватных полей класса.
+ * Добавить методы - взятие данных из вне, расфасовка по полям (массиву), закачка в бд.
+ * Проверить/переписать текущие методы класса.
  * */
 
 class User
@@ -16,13 +18,13 @@ class User
     private $name = null;
     private $surname = null;
     private $patronymic = null;
-    private $brithdate = null;
+    private $birthday = null;
     private $gender = null;
-    private $pasportSeries = null;
-    private $pasportNumber = null;
-    private $pasportDepartment = null;
-    private $pasportAddress = null;
-    private $pasportGetDate = null;
+    private $PassportSeries = null;
+    private $PassportNumber = null;
+    private $PassportDepartment = null;
+    private $PassportAddress = null;
+    private $PassportGetDate = null;
     private $phoneContact = null;
     private $loginPhone = null;
     private $password = null;
@@ -32,38 +34,32 @@ class User
         'name' => 'setName',
         'surname' => 'setSurname',
         'patronymic' => 'setPatronymic',
-        'brithdate' => 'setBrithdate',
+        'birthday' => 'setbirthday',
         'gender' => 'setGender',
-        'pasportSeries' => 'setPasportSeries',
-        'pasportNumber' => 'setPasportNumber',
-        'pasportDepartment' => 'setPasportDepartment',
-        'pasportAddress' => 'setPasportAddress',
-        'pasportGetDate' => 'setPasportGetDate',
+        'PassportSeries' => 'setPassportSeries',
+        'PassportNumber' => 'setPassportNumber',
+        'PassportDepartment' => 'setPassportDepartment',
+        'PassportAddress' => 'setPassportAddress',
+        'PassportGetDate' => 'setPassportGetDate',
         'phoneContact' => 'setPhoneContact',
-        'loginPhone' => 'setLoginPhone',
         'password' => 'setPassword',
         'email' => 'setEmail'
     );
 
-    /*
-     * Обновляет данные в БД по определенному id в таблице `users` */
     private function load($id)
     {
 
     }
 
-    /*
-     * Выгружает из БД данные определенного пользователя из таблицы `users` */
-    private function loadData($data)
-    {
 
+    private function setData($data)
+    {
         foreach ($data as $key => $value) {
             if (isset($this->setMapping[$key])) {
                 $field = $this->setMapping[$key];
                 $this->$field($value);
             }
         }
-
     }
 
     public function getName()
@@ -84,10 +80,10 @@ class User
         return $patron;
     }
 
-    public function getBrithdate()
+    public function getbirthday()
     {
-        $brithdate = $this->brithdate;
-        return $brithdate;
+        $birthday = $this->birthday;
+        return $birthday;
     }
 
     public function getGender()
@@ -96,28 +92,28 @@ class User
         return $gender;
     }
 
-    public function getPasportSeries()
+    public function getPassportSeries()
     {
-        $pasportSeries = $this->pasportSeries;
-        return $pasportSeries;
+        $PassportSeries = $this->PassportSeries;
+        return $PassportSeries;
     }
 
-    public function getPasportNumber()
+    public function getPassportNumber()
     {
-        $pasportNumber = $this->pasportNumber;
-        return $pasportNumber;
+        $PassportNumber = $this->PassportNumber;
+        return $PassportNumber;
     }
 
-    public function getPasportAddress()
+    public function getPassportAddress()
     {
-        $pAdr = $this->pasportAddress;
+        $pAdr = $this->PassportAddress;
         return $pAdr;
     }
 
-    public function getPasportGetDate()
+    public function getPassportGetDate()
     {
-        $pasportGetDate = $this->pasportGetDate;
-        return $pasportGetDate;
+        $PassportGetDate = $this->PassportGetDate;
+        return $PassportGetDate;
     }
 
     public function getPhoneContact()
@@ -174,11 +170,11 @@ class User
         }
     }
 
-    public function setBrithdate($birthday)
+    public function setbirthday($birthday)
     {
         $pattern = '\d{2}[.|,|\-|\/]\d{2}[.|,|\-|\/]\d{4}';
         if (preg_match($pattern, $birthday)) {
-            $this->brithdate = $birthday;
+            $this->birthday = $birthday;
         } else {
             throw new Exception('Wrong birthday');
         }
@@ -187,62 +183,101 @@ class User
 
     public function setGender($gender)
     {
-
         $this->gender = $gender;
     }
 
-    public function setPasportSeries($pasportSeries)
+    public function setPassportSeries($PassportSeries)
     {
         $pattern = '\d{4}';
-        if (preg_match($pattern, $pasportSeries)) {
-            $this->pasportSeries = $pasportSeries;
+        if (preg_match($pattern, $PassportSeries)) {
+            $this->PassportSeries = $PassportSeries;
         } else {
-            throw new Exception('Wrong pasport series');
+            throw new Exception('Wrong Passport series');
         }
     }
 
-    public function setPasportNumber($pasportNumber)
+    public function setPassportNumber($PassportNumber)
     {
         $pattern = '\d{6}';
-        if (preg_match($pattern, $pasportNumber)) {
-            $this->pasportNumber = $pasportNumber;
+        if (preg_match($pattern, $PassportNumber)) {
+            $this->PassportNumber = $PassportNumber;
         } else {
-            throw new Exception('Wrong pasport series');
+            throw new Exception('Wrong Passport series');
         }
     }
 
-    public function setPasportAddress($pAdr)
+    public function setPassportAddress($pAdr)
     {
-        $this->pasportAddress = $pAdr;
-
+        $pattern = '\w+';
+        if (preg_match($pattern, $pAdr)) {
+            $this->PassportAddress = $pAdr;
+        }
+        else {
+            throw new Exception('Wrong address');
+        }
     }
 
-    public function setPasportGetDate($pasportGetDate)
+    public function setPassportGetDate($PassportGetDate)
     {
-        $this->pasportGetDate = $pasportGetDate;
+        $pattern = '/\d{2}[.|,|\-|\/]\d{2}[.|,|\-|\/]\d{4}/';
+        if (preg_match($pattern, $PassportGetDate)) {
+            $this->PassportGetDate = $PassportGetDate;
+        }
+        else {
+            throw new Exception('Wrong date get Passport');
+        }
     }
 
     public function setPhoneContact($phoneCont)
     {
-        $this->phoneContact = $phoneCont;
-
+        $pattern = '/((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}/';
+        /*
+        +79261234567
+        89261234567
+        79261234567
+        +7 926 123 45 67
+        8(926)123-45-67
+        123-45-67
+        9261234567
+        79261234567
+        (495)1234567
+        (495) 123 45 67
+        89261234567
+        8-926-123-45-67
+        8 927 1234 234
+        8 927 12 12 888
+        8 927 12 555 12
+        8 927 123 8 123*/
+        if(preg_match($pattern,$phoneCont)) {
+            $this->phoneContact = $phoneCont;
+        }
+        else {
+            throw new Exception('Wrong contact phone number');
+        }
     }
 
-    public function setLoginPhone($login)
-    {
-        $this->loginPhone = $login;
-
-    }
+    /*Set'eр на логин не нужен. его нельзя изменить.*/
 
     public function setPassword($pass)
     {
-        $this->password = $pass;
-
+        $pattern = '/\w{20}/';
+        if(preg_match($pattern,$pass)) {
+            $this->password = $pass;
+        }
+        else {
+            throw new Exception('Wrong password');
+        }
     }
 
     public function setEmail($email)
     {
-        $this->email = $email;
+        $pattern = '/[^(\w)|(\@)|(\.)|(\-)]/';
+        if(preg_match($pattern, $email)) {
+            $this->email = $email;
+        }
+        else {
+            throw new Exception('Wrong E-mail');
+        }
     }
 
 
