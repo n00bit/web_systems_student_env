@@ -19,7 +19,7 @@ logTest();
     $ar6=array('Test','callScream');
     $ar7=array('Test','veiwForms');
 
-    $ar5 = array('id' => '\d+', 'cool' => '\d+','rise' => 'wake_up', "end" => "fall", "call" => "scream", "author" => "author");
+    $ar5 = array('id' => '\d+', 'cool' => '\d+','rise' => 'wake_up', "end" => "fall", "call" => "scream", "author" => "login");
 
     $r->get('/:rise', $ar3, $ar5);
     $r->get('/user/:id/:cool', $ar1, $ar5);

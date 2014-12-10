@@ -6,8 +6,9 @@ $loader = new Loader();
 $loader->load_all_modules();
 
 print "EVERYTHING IS LOST, CHIEF, EVERYTHING!!!\n";
-var_dump($_COOKIE);
+
 $r = Router::getInstance();
+
 $r->process($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
 

@@ -11,23 +11,22 @@
         {
             print "What's up, dock?";//детектор работоспособности
             $current_id = null;
-            $data = new AuthorDB();//инициализация класса работы с базой данных
-            $current_id=$this->subscriberTest($data,'getID');
-            if(!is_null($current_id)){
-                $this->signInAccount($current_id,'subscriber');
-                return;
+
+            $login = $_POST['login'];
+            $password = $_POST['password'];
+            $user = $this->getUser($login);
+            if ($user->verifyPassword($password)) {
+                $this->signInAccount($user->id(), $user->role());
+                $this->gotoHome();
             }
-            $current_id=$this->workforceTest($data,'getID','staff','login');
-            if(!is_null($current_id)){
-                $this->signInAccount($current_id,'staff');
-                return;
+            else {
+                $this->showMessage('Password is wrong');
             }
-            $current_id=$this->workforceTest($data,'getID','brigade','login');
-            if(!is_null($current_id)){
-                $this->signInAccount($current_id,'brigade');
-                return;
-            }
-            $data->endWork();//окончание работы с базой данных
+        }
+
+        private function getUser($login)
+        {
+
         }
 
         private function subscriberTest($data, $method){//попытка залогинится как абонент, передаем экземпляр класса и методЪ
