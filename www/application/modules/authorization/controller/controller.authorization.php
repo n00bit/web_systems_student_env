@@ -17,16 +17,20 @@
             $user = $this->getUser($login);
             if ($user->verifyPassword($password)) {
                 $this->signInAccount($user->id(), $user->role());
-                $this->gotoHome();
+                //$this->gotoHome();
             }
             else {
-                $this->showMessage('Password is wrong');
+               // $this->showMessage('Password is wrong');
             }
         }
 
-        private function getUser($login)
-        {
-
+        private function getUser($login){//вернуть соотвтствующй модуль для дальнейшей обработки
+            if (preg_match('/[A-Za-z]+/', $login) !== 0) {//если в логине не только цифры
+                return new StaffModel($login);                                   //то логинется не пользователь
+            }
+            else{//логинится пользователь
+                return null;
+            }
         }
 
         private function subscriberTest($data, $method){//попытка залогинится как абонент, передаем экземпляр класса и методЪ

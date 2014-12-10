@@ -9,7 +9,7 @@ Class Loader
         $this->includeFunc(glob("application/core/*.php"));
         $this->includeFunc(glob("application/modules/*/controller/*.php"));
         $this->includeFunc(glob("application/modules/*/routes_collection.php"));
-        $this->includeFunc(glob("application/modules/*/dataparser/*.php"));
+        $this->includeFunc(glob("application/modules/*/model/*.php"));
     }
 
     private function includeFunc($pattern){
