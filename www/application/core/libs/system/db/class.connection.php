@@ -13,7 +13,7 @@ class Connection
     #Создание подключения
 
     public function __construct(){
-        self::$connection = mysqli_connect(DBSERVER,DBUSER,DBPASSWORD,DBNAME) or die('Error connect DB: ' . mysql_error());
+        self::$connection = mysqli_connect('172.33.10.50','root','root','webdb') or die('Error connect DB: ' . mysql_error());
     }
 
     #Что бы не создавать кучу подключений, создадим только одно

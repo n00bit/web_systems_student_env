@@ -287,11 +287,6 @@ class UserFactory
 
     private static $_connect = null;
 
-    public static function CreateUser($id)
-    {
-        return new User($id);
-    }
-
     public static function where($param)
     {
 
@@ -311,9 +306,10 @@ class UserFactory
     public static function execute($query)
     {
         $conToDB = new Connection();
-        if(self::$_connect == null){
-            return self::$_connect = $conToDB->getConnection()->query($query);
+        $status = $conToDB->getConnection()->query($query);
+        if($status){
+            return 1;
         }
-
+        else return 0;
     }
 }
