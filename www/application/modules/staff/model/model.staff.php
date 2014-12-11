@@ -4,7 +4,6 @@ Class StaffModel{
     //персонаж - оператор одного из отделов
 
     private $connection_container = null;
-
     private $personalData = array(); //пероснальные данные персонажа
 
     private $login = null;//логин персонажа
@@ -20,10 +19,10 @@ Class StaffModel{
         $this->connection_container = new Connection();
         $result = $this->getStaffRecord();//получить данные о сотруднике
         $this->parseData($result);
-        if(is_null($this->personalData)){
+        if(!is_null($this->personalData)){//логин и пароль корректны
             return true;
         }
-        else{
+        else{//некорректные логин или пароль
             return false;
         }
     }
