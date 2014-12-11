@@ -284,6 +284,9 @@ class User
 
 class UserFactory
 {
+
+    private static $_connect = null;
+
     public static function CreateUser($id)
     {
         return new User($id);
@@ -305,9 +308,12 @@ class UserFactory
     }
 
     /* Appeal to BD & execute query*/
-    public static function execute()
+    public static function execute($query)
     {
-        $loadInDB = new Database();
+        $conToDB = new Connection();
+        if(self::$_connect == null){
+            return self::$_connect = $conToDB->getConnection()->query($query);
+        }
 
     }
 }
