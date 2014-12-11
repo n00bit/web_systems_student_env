@@ -30,11 +30,11 @@ class User
     private $password = null;
     private $email = null;
 
-    private $setMapping = array(
+    private $mapping = array(
         'name' => 'setName',
         'surname' => 'setSurname',
         'patronymic' => 'setPatronymic',
-        'birthday' => 'setbirthday',
+        'birthday' => 'setBirthday',
         'gender' => 'setGender',
         'PassportSeries' => 'setPassportSeries',
         'PassportNumber' => 'setPassportNumber',
@@ -55,8 +55,8 @@ class User
     private function setData($data)
     {
         foreach ($data as $key => $value) {
-            if (isset($this->setMapping[$key])) {
-                $field = $this->setMapping[$key];
+            if (isset($this->mapping[$key])) {
+                $field = $this->mapping[$key];
                 $this->$field($value);
             }
         }
@@ -142,65 +142,64 @@ class User
 
     /***SET***/
 
-    /* Обработать все ошибки*/
-    public function setName($setName)
+    public function setName($pName)
     {
-        if (is_string($setName)) {
-            $this->name = $setName;
+        if (is_string($pName)) {
+            $this->name = $pName;
         } else {
             throw new Exception('Wrong name');
         }
     }
 
-    public function setSurname($setSurname)
+    public function setSurname($pSurname)
     {
-        if (is_string($setSurname)) {
-            $this->surname = $setSurname;
+        if (is_string($pSurname)) {
+            $this->surname = $pSurname;
         } else {
             throw new Exception('Wrong surname');
         }
     }
 
-    public function setPatronymic($patron)
+    public function setPatronymic($pPatronymic)
     {
-        if (is_string($patron)) {
-            $this->patronymic = $patron;
+        if (is_string($pPatronymic)) {
+            $this->patronymic = $pPatronymic;
         } else {
             throw new Exception('Wrong patronymic');
         }
     }
 
-    public function setbirthday($birthday)
+    public function setBirthday($pBirthday)
     {
         $pattern = '\d{2}[.|,|\-|\/]\d{2}[.|,|\-|\/]\d{4}';
-        if (preg_match($pattern, $birthday)) {
-            $this->birthday = $birthday;
+        if (preg_match($pattern, $pBirthday)) {
+            $this->birthday = $pBirthday;
         } else {
             throw new Exception('Wrong birthday');
         }
 
     }
 
-    public function setGender($gender)
+    public function setGender($pGender)
     {
-        $this->gender = $gender;
+        $this->gender = $pGender;
     }
 
-    public function setPassportSeries($PassportSeries)
+    public function setPassportSeries($pPassportSeries)
     {
         $pattern = '\d{4}';
-        if (preg_match($pattern, $PassportSeries)) {
-            $this->PassportSeries = $PassportSeries;
+        if (preg_match($pattern, $pPassportSeries)) {
+            $this->PassportSeries = $pPassportSeries;
         } else {
             throw new Exception('Wrong Passport series');
         }
     }
 
-    public function setPassportNumber($PassportNumber)
+    public function setPassportNumber($pPassportNumber)
     {
         $pattern = '\d{6}';
-        if (preg_match($pattern, $PassportNumber)) {
-            $this->PassportNumber = $PassportNumber;
+        if (preg_match($pattern, $pPassportNumber)) {
+            $this->PassportNumber = $pPassportNumber;
         } else {
             throw new Exception('Wrong Passport series');
         }
@@ -217,11 +216,11 @@ class User
         }
     }
 
-    public function setPassportGetDate($PassportGetDate)
+    public function setPassportGetDate($pPassportGetDate)
     {
         $pattern = '/\d{2}[.|,|\-|\/]\d{2}[.|,|\-|\/]\d{4}/';
-        if (preg_match($pattern, $PassportGetDate)) {
-            $this->PassportGetDate = $PassportGetDate;
+        if (preg_match($pattern, $pPassportGetDate)) {
+            $this->PassportGetDate = $pPassportGetDate;
         }
         else {
             throw new Exception('Wrong date get Passport');
@@ -290,17 +289,17 @@ class UserFactory
         return new User($id);
     }
 
-    public static function where()
+    public static function where($param)
     {
 
     }
 
-    public static function sort()
+    public static function sort($param)
     {
 
     }
 
-    public static function limit()
+    public static function limit($param)
     {
 
     }
