@@ -1,6 +1,6 @@
 <?php
 
-require_once '../ini.db.php';
+require_once 'ini.db.php';
 
 class Connection
 {
@@ -15,6 +15,11 @@ class Connection
 
     public function __construct(){
         $this->connection = mysqli_connect(DBSERVER,DBUSER,DBPASSWORD,DBNAME) or die('Error connect DB: ' . mysql_error());
+        var_dump(DBSERVER);
+        var_dump(DBUSER);
+        var_dump(DBPASSWORD);
+        var_dump(DBNAME);
+
     }
 
     #Что бы не создавать кучу подключений, создадим только одно
