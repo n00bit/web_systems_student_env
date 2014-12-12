@@ -54,6 +54,9 @@ Class Test
 
     function veiwForms(){
         print "I'm ready!";
+        foreach($_COOKIE as $value){
+            return;
+        }
         include_once "Form.html";
     }
 

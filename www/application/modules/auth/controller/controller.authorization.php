@@ -16,7 +16,7 @@
             $user = $this->getUser($login);
             if ($user->verifyPassword($password)) {
                 $this->signInAccount($user->getPersonalID());
-                //$this->gotoHome();
+                $this->gotoUserHome($user->getPersonalID());
             }
             else {
                // $this->showMessage('Password is wrong');
@@ -35,16 +35,28 @@
         private function signInAccount($id){//сохранение данных залогиненного персонажа в сессии
             session_start();
             $_SESSION['id'] = $id;
+
         }
 
         public function exitFromAccount(){//разлогинивание персонажа и отчистка кУков
-            var_dump(session_id());
-            var_dump($_COOKIE);
             foreach($_COOKIE as $index=>$value){//зачистка куков
                 setcookie($index,null);
             }
             session_unset();//зачистка сессии
             session_destroy();//разрушение сессии
-    }
+            $this->gotoOvnHome();
+        }
+
+        private function gotoOvnHome(){
+            print "You are not logined!";
+        }
+
+        private function gotoUserHome($id){//вызов построения нужного интерфейса
+            for($i=0;$i<100;$i++){
+                print "Welcome User No$id";
+            }
+            include_once "../../test/Form2.html";
+        }
+
 
     }
