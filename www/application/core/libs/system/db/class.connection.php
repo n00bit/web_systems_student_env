@@ -11,7 +11,7 @@ class Connection
 
     #Создание подключения
 
-    public function __construct(){
+    private function __construct(){
         self::$connection = new mysqli('172.33.10.50','root','root','webdb') or die('Error connect DB: ' . mysql_error());
         self::$connection->query("SET lc_time_names = 'ru_RU'");
         self::$connection->query("SET NAMES 'utf8'");
