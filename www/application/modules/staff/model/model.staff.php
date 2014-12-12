@@ -14,17 +14,7 @@ Class StaffModel{
     private function installConnection(){//установка соединения с базой данных(через уже существующий класс работы с базой данных)
         self::$connection_container = Connection::getInstance();
         return self::$connection_container->getConnection();
-        //$this->connection_container = new Connection();
-        //return $this->connection_container->getConnection();
     }
-
-//    public function connectToDB(){
-//        if(self::$connection_container == null){
-//            $_conn = new Connection();
-//            return self::$connection_container = $_conn->getInstance()->getConnection();
-//        }
-//        return self::$connection_container;
-//    }
 
     public function __construct($login){//инициализация класса работы с персоналом
         $this->login = $login;
@@ -44,9 +34,8 @@ Class StaffModel{
 
     private function getStaffRecord(){//считать данные из БД по логину и паролю
         $current_connection = $this->installConnection();
-       // $current_connection = $this->connectToDB();
         $query = "SELECT * FROM staff  WHERE login = '$this->login' AND password = '$this->password'";//запросЪ
-        $result =  $this->$current_connection->query($query);//выполнение запроса
+        $result =  $current_connection->query($query);//выполнение запроса
         return $result;
     }
 
