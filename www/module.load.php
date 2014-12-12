@@ -7,7 +7,7 @@ Class Loader
     public function load_all_modules()
     {
         $this->includeFunc(glob("application/core/*.php"));
-        $this->includeFunc(glob("application/core/libs/*/*.php"));
+        $this->includeFunc(glob("application/core/libs/system/db/*.php"));
         $this->includeFunc(glob("application/modules/*/controller/*.php"));
         $this->includeFunc(glob("application/modules/*/routes_collection.php"));
         $this->includeFunc(glob("application/modules/*/model/*.php"));

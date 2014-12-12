@@ -9,15 +9,19 @@ Class StaffModel{
     private $login = null;//логин персонажа
     private $password = null;//пароль персонажа
     private $department = null;//отдел пресонажа
-    /*
-     * Ошибка - создание более одного коннекта к БД.*/
-    public function connectToDB(){
-        if(self::$connection_container == null){
-            $_conn = new Connection();
-            return self::$connection_container = $_conn->getInstance()->getConnection();
-        }
-        return self::$connection_container;
+
+    private function installCommection(){//установка соединения с базой данных(через уже существующий класс работы с базой данных)
+        $this->connection_container = new Connection();
+        return $this->connection_container->getConnection();
     }
+
+//    public function connectToDB(){
+//        if(self::$connection_container == null){
+//            $_conn = new Connection();
+//            return self::$connection_container = $_conn->getInstance()->getConnection();
+//        }
+//        return self::$connection_container;
+//    }
 
     public function __construct($login){//инициализация класса работы с персоналом
         $this->login = $login;
@@ -36,14 +40,14 @@ Class StaffModel{
     }
 
     private function getStaffRecord(){//считать данные из БД по логину и паролю
-        //$current_connection = $this->connection_container->getConnection();
+        $current_connection = $this->installCommection();
+       // $current_connection = $this->connectToDB();
         $query = "SELECT * FROM staff  WHERE login = '$this->login' AND password = '$this->password'";//запросЪ
-        //$result = $current_connection->query($query);//выполнение запроса
-        $result = $this->connectToDB()->query($query);
+        $result =  $this->$current_connection->query($query);//выполнение запроса
         return $result;
     }
 
-    private function parseData($result){
+    private function parseData($result){//
         $result = mysqli_fetch_array($result);
         foreach($result as $index => $value){
             if(preg_match('/[A-Za-z]+/',$index)){

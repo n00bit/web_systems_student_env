@@ -1,6 +1,5 @@
 <?php
 
-require_once '../../../ini.db.php';
 
 class Connection
 {
