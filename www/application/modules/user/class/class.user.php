@@ -305,8 +305,8 @@ class UserFactory
     /* Appeal to BD & execute query*/
     public static function execute($query)
     {
-        $conToDB = new Connection();
-        $status = $conToDB->getConnection()->query($query);
+        $_connect = Connection::getInstance();
+        $status = $_connect->getConnection()->query($query);
         if($status){
             return 1;
         }

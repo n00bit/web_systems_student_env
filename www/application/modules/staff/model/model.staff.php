@@ -10,9 +10,12 @@ Class StaffModel{
     private $password = null;//пароль персонажа
     private $department = null;//отдел пресонажа
 
-    private function installCommection(){//установка соединения с базой данных(через уже существующий класс работы с базой данных)
-        $this->connection_container = new Connection();
-        return $this->connection_container->getConnection();
+    /*Если static, то обращение self::*/
+    private function installConnection(){//установка соединения с базой данных(через уже существующий класс работы с базой данных)
+        self::$connection_container = Connection::getInstance();
+        return self::$connection_container->getConnection();
+        //$this->connection_container = new Connection();
+        //return $this->connection_container->getConnection();
     }
 
 //    public function connectToDB(){
@@ -40,7 +43,7 @@ Class StaffModel{
     }
 
     private function getStaffRecord(){//считать данные из БД по логину и паролю
-        $current_connection = $this->installCommection();
+        $current_connection = $this->installConnection();
        // $current_connection = $this->connectToDB();
         $query = "SELECT * FROM staff  WHERE login = '$this->login' AND password = '$this->password'";//запросЪ
         $result =  $this->$current_connection->query($query);//выполнение запроса
