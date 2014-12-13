@@ -71,9 +71,9 @@ class Router
 
         $active_routes = $this->routes[$method] + $this->routes['ANY'];
 // Для всех роутов
+
         foreach ($active_routes as $pattern => $callback) {
 // Если REQUEST_URI соответствует шаблону - вызываем функцию
-
             if (preg_match_all("/$pattern/", $uri, $matches) !== 0) {
 // вызываем callback
                 $posable_attribute = array();
@@ -107,7 +107,7 @@ class Router
                 $pattern = str_replace(":$value", "($arg_rex_exp)", $pattern);
             }
         }
-        $pattern = "^$pattern$";
+        $pattern = "^$pattern";//ВЕРНУТЬ ЗНАК $ ПОСЛЕ PULLREQUEST!!!!(возможно)
         return $pattern;
     }
 }

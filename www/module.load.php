@@ -11,6 +11,7 @@ Class Loader
         $this->includeFunc(glob("application/modules/*/controller/*.php"));
         $this->includeFunc(glob("application/modules/*/routes_collection.php"));
         $this->includeFunc(glob("application/modules/*/model/*.php"));
+        $this->includeFunc(glob("application/modules/*/view/*.php"));
     }
 
     private function includeFunc($pattern){

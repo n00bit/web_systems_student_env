@@ -11,8 +11,18 @@
         {
             print "What's up, dock?";//детектор работоспособности
             $current_id = null;
-            $login = $_POST['login'];
-            $password = $_POST['password'];
+
+            $login = null;
+            $password = null;
+            if($_SERVER['REQUEST_METHOD']=='POST'){//времаенная обработка методов для авторизациии, ПОДЛЕЖИТ УНИЧТОЖЕНИЮ
+                $login = $_POST['login'];          //ПУТЕМ ИСКЛЮЧЕНИЯ ВОЗМОЖНОСТИ ОБРАБОТКИ GET
+                $password = $_POST['password'];
+            }
+            else{
+                $login = $_GET['login'];
+                $password = $_GET['password'];
+            }
+
             $userTools = $this->getUser($login);
             $user = $userTools->verifyPassword($password);
 
@@ -54,11 +64,18 @@
         }
 
         private function gotoUserHome($id){//вызов построения нужного интерфейса
-            for($i=0;$i<100;$i++){
-                print "Welcome User No$id";
-            }
-            include_once "../../test/Form2.html";
+            $view = new AuthorizationViewer();
+            $view->showUserHome($id);
         }
 
+        public function showLoginForm(){//показать форму авторизации
+            $view = new AuthorizationViewer();
+            $view->showLoginForm();
+        }
+
+        public function showLoginFormForDimas(){//показать форму авторизации К УНИЧТОЖЕНИЮ
+            $view = new AuthorizationViewer();
+            $view->showLoginFormForDimas();
+        }
 
     }
