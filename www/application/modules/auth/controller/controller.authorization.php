@@ -1,77 +1,64 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: Alexandr
  * Date: 06.12.2014
  * Time: 0:35
  */
-Class Authorization
-{
+    Class Authorization{
 
-    public function baseAuthorization()//авторизация
-    {
-        print "What's up, dock?";//детектор работоспособности
-        $current_id = null;
-        /*Уточнить - real_escape OR pregmatch*/
-        $login = mysql_real_escape_string($_POST['login']);
-        var_dump($login);
-        $password = mysql_real_escape_string($_POST['password']);
-        $user = $this->getUser($login);
-        if ($user->verifyPassword($password)) {
-            $this->signInAccount($user->getPersonalID());
-            $this->gotoUserHome($user->getPersonalID());
-        } else {
-            // $this->showMessage('Password is wrong');
-        }
-    }
+        public function baseAuthorization()//авторизация
+        {
+            print "What's up, dock?";//детектор работоспособности
+            $current_id = null;
+            $login = $_POST['login'];
+            $password = $_POST['password'];
+            $userTools = $this->getUser($login);
+            $user = $userTools->verifyPassword($password);
 
-    private function getUser($login)
-    {//вернуть соотвтствующй модуль для дальнейшей обработки
-        switch($login){
-            case preg_match('/([a-zA-Z0-9])\w+/', $login):{
-                return new StaffModel($login);
-                break;
+            if (!is_null($user)) {
+                $this->signInAccount($user->getPersonalID());
+                $this->gotoUserHome($user->getPersonalID());
             }
+            else {
+               // $this->showMessage('Password is wrong');
+            }
+        }
 
+        private function getUser($login){//вернуть соотвтствующй модуль для дальнейшей обработки
+            if (preg_match('/[A-Za-z]+/', $login) !== 0) {//если в логине не только цифры
+                return new StaffModel($login);                                   //то логинется не пользователь
+            }
+            else{//логинится пользователь
+                return null;
+            }
+        }
+
+        private function signInAccount($id){//сохранение данных залогиненного персонажа в сессии
+            session_start();
+            $_SESSION['id'] = $id;
 
         }
-//        if (preg_match('/[A-Za-z]+/', $login) !== 0) {//если в логине не только цифры
-//            return new StaffModel($login);                                   //то логинется не пользователь
-//        } else {//логинится пользователь
-//            return null;
-//        }
-    }
 
-    private function signInAccount($id)
-    {//сохранение данных залогиненного персонажа в сессии
-        session_start();
-        $_SESSION['id'] = $id;
-
-    }
-
-    public function exitFromAccount()
-    {//разлогинивание персонажа и отчистка кУков
-        foreach ($_COOKIE as $index => $value) {//зачистка куков
-            setcookie($index, null);
+        public function exitFromAccount(){//разлогинивание персонажа и отчистка кУков
+            foreach($_COOKIE as $index=>$value){//зачистка куков
+                setcookie($index,null);
+            }
+            session_unset();//зачистка сессии
+            session_destroy();//разрушение сессии
+            $this->gotoOvnHome();
         }
-        session_unset();//зачистка сессии
-        session_destroy();//разрушение сессии
-        $this->gotoOvnHome();
-    }
 
-    private function gotoOvnHome()
-    {
-        print "You are not logined!";
-    }
-
-    private function gotoUserHome($id)
-    {//вызов построения нужного интерфейса
-        for ($i = 0; $i < 100; $i++) {
-            print "Welcome User No$id";
+        private function gotoOvnHome(){
+            print "You are not logined!";
         }
-        include_once "../../test/Form2.html";
+
+        private function gotoUserHome($id){//вызов построения нужного интерфейса
+            for($i=0;$i<100;$i++){
+                print "Welcome User No$id";
+            }
+            include_once "../../test/Form2.html";
+        }
+
+
     }
-
-
-}

@@ -12,12 +12,8 @@ class User
 
     public function __construct()
     {
-        /*@param - $id, $log, $pass*/
         /*  print "Пользователь с номером ID $id";*/
     }
-
-    private static $statusCon = null;
-    private $query = null;
 
     private $name = null;
     private $surname = null;
@@ -49,16 +45,6 @@ class User
         'password' => 'setPassword',
         'email' => 'setEmail'
     );
-
-    private function setConnect()
-    {
-        if (is_null(self::$statusCon)) {
-            self::$statusCon = Connection::getInstance();
-            return self::$statusCon->getConnection();
-        } else
-            return self::$statusCon->getConnection();
-    }
-
 
     private function load($id)
     {
@@ -224,7 +210,8 @@ class User
         $pattern = '\w+';
         if (preg_match($pattern, $pAdr)) {
             $this->PassportAddress = $pAdr;
-        } else {
+        }
+        else {
             throw new Exception('Wrong address');
         }
     }
@@ -234,7 +221,8 @@ class User
         $pattern = '/\d{2}[.|,|\-|\/]\d{2}[.|,|\-|\/]\d{4}/';
         if (preg_match($pattern, $pPassportGetDate)) {
             $this->PassportGetDate = $pPassportGetDate;
-        } else {
+        }
+        else {
             throw new Exception('Wrong date get Passport');
         }
     }
@@ -259,9 +247,10 @@ class User
         8 927 12 12 888
         8 927 12 555 12
         8 927 123 8 123*/
-        if (preg_match($pattern, $phoneCont)) {
+        if(preg_match($pattern,$phoneCont)) {
             $this->phoneContact = $phoneCont;
-        } else {
+        }
+        else {
             throw new Exception('Wrong contact phone number');
         }
     }
@@ -271,9 +260,10 @@ class User
     public function setPassword($pass)
     {
         $pattern = '/\w{20}/';
-        if (preg_match($pattern, $pass)) {
+        if(preg_match($pattern,$pass)) {
             $this->password = $pass;
-        } else {
+        }
+        else {
             throw new Exception('Wrong password');
         }
     }
@@ -281,35 +271,20 @@ class User
     public function setEmail($email)
     {
         $pattern = '/[^(\w)|(\@)|(\.)|(\-)]/';
-        if (preg_match($pattern, $email)) {
+        if(preg_match($pattern, $email)) {
             $this->email = $email;
-        } else {
+        }
+        else {
             throw new Exception('Wrong E-mail');
         }
     }
 
-    //find users login...
-    public function findByLogin($login)
-    {
-
-    }
-
-    public function findByPassword($password)
-    {
-
-    }
-
-
-    private function execute($query)
-    {
-
-    }
 
 }
 
 class UserFactory
 {
-    /*была ф-я возвращающая new User*/
+
     private static $_connect = null;
 
     public static function where($param)
@@ -328,8 +303,13 @@ class UserFactory
     }
 
     /* Appeal to BD & execute query*/
-    public static function execute1($query)
+    public static function execute($query)
     {
-
+        $_connect = Connection::getInstance();
+        $status = $_connect->getConnection()->query($query);
+        if($status){
+            return 1;
+        }
+        else return 0;
     }
 }
