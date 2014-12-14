@@ -1,0 +1,68 @@
+CREATE TABLE "user" (
+  "id" INT NOT NULL,
+  "name" varchar(20) ,
+  "surname" varchar(20) ,
+  "patronymic" varchar(20) ,
+  "phone" INT,
+  "email" varchar(20) ,
+  "image" TEXT,
+  PRIMARY KEY  ("id")
+);
+
+CREATE TABLE "order" (
+  "id" INT NOT NULL,
+  "id_user" INT,
+  "id_goods" INT,
+  "val_order" INT,
+  "date" DATE,
+  "id_operator" INT,
+  "date_val" DATE,
+  "date_final" INT,
+  PRIMARY KEY  ("id")
+);
+
+CREATE TABLE "goods" (
+  "id" INT,
+  "name" TEXT,
+  "brand" varchar(20) ,
+  "number" INT,
+  "price" INT,
+  PRIMARY KEY  ("id")
+);
+
+CREATE TABLE "bid" (
+  "id" INT,
+  "id_goods" INT,
+  "number" INT,
+  "data" DATE,
+  "id_manager" INT,
+  PRIMARY KEY  ("id")
+);
+
+CREATE TABLE "delivery" (
+  "id" INT,
+  "id_goods" INT NOT NULL ,
+  "number" INT,
+  "id_bid" INT,
+  "date" DATE,
+  "id_vendors" INT,
+  "price" INT,
+  PRIMARY KEY  ("id","id_goods")
+);
+
+CREATE TABLE "vendors" (
+  "id" INT,
+  "name" varchar(20) ,
+  PRIMARY KEY  ("id")
+);
+
+CREATE TABLE "employee" (
+  "id" INT,
+  "name" varchar(20) ,
+  "surname" varchar(20) ,
+  "patronymic" varchar(20) ,
+  "phone" INT,
+  "email" varchar(20) ,
+  "image" INT,
+  PRIMARY KEY  ("id")
+);
