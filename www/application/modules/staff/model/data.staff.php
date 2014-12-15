@@ -96,6 +96,15 @@ Class StaffData{//хранилище сведений о персонаже
             return null;
         }
     }
+
+    public function getPersonalScore(){//вернуть должность персонажа
+        if(array_key_exists('score',$this->personalData)){
+            return $this->personalData['score'];
+        }
+        else{
+            return null;
+        }
+    }
 //набор setter-ов
 
     public function setAllData($result){//заполнение всего хранилища
@@ -103,6 +112,15 @@ Class StaffData{//хранилище сведений о персонаже
         foreach($result as $index => $value){
             if(preg_match('/[A-Za-z]+/',$index)){
                 $this->personalData[$index] = $value;
+            }
+        }
+    }
+
+    public function setScoreData($result){//заполнение элемента хранилища, содержащего оценки перонажа
+        $result = mysqli_fetch_array($result);
+        foreach($result as $index => $value){
+            if(preg_match('/(?<=rating_)[a-z]+/',$index, $newIndex)){
+                $this->personalData['score'][$newIndex[0]] = $value;
             }
         }
     }

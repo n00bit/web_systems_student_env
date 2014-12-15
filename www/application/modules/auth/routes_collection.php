@@ -3,7 +3,6 @@
     function logTest(){
         foreach($_COOKIE as $value){
             if(!is_null($value)){
-                print "do?";
                 include_once "view/deloginForm.html";
                 return;
             }

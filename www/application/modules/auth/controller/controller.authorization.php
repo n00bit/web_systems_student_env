@@ -24,7 +24,7 @@
             }
 
             $userTools = $this->getUser($login);
-            $user = $userTools->verifyPassword($password);
+            $user = $userTools->verifyLoginAndPassword($login,$password);
 
             if (!is_null($user)) {
                 $this->signInAccount($user->getPersonalID());
@@ -37,7 +37,7 @@
 
         private function getUser($login){//вернуть соотвтствующй модуль для дальнейшей обработки
             if (preg_match('/[A-Za-z]+/', $login) !== 0) {//если в логине не только цифры
-                return new StaffModel($login);                                   //то логинется не пользователь
+                return new StaffModel();                                   //то логинется не пользователь
             }
             else{//логинится пользователь
                 return null;
