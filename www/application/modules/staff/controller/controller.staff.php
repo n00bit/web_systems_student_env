@@ -32,7 +32,7 @@ Class Staff{
 
     }
 
-    public function autorization(){//действие после авторизации
+    public function ticketsConstruct(){//действие после авторизации
         $id = $this->current_id;
         $this->current_data_worker = new StaffModel();
 
@@ -43,15 +43,24 @@ Class Staff{
 
         $this->current_data_worker->getPersonalMessegesBetween(3,'2012-01-01','2013-01-01');
 
-        var_dump($this->current_data_storage->getPersonalScore());
-        var_dump($this->current_data_storage->getAllPersonalTiketsID());
-        var_dump($this->current_data_storage->getPersonalMessege());
+
+//        var_dump($this->current_data_storage->getPersonalScore());
+//        var_dump($this->current_data_storage->getAllPersonalTiketsID());
+//        var_dump($this->current_data_storage->getPersonalMessege());
+        $personalScore = $this->current_data_storage->getPersonalScore();
+        $personalTickets =$this->current_data_storage->getAllPersonalTiketsID();
+        $viewer = new StaffViewer();
+        $viewer->showPersonalData($personalScore);
+        $viewer->showAllTickets($personalTickets);
     }
 
-    public function ticketsConstruct(){//построение интерфейса для вывода перечня тикетно
-
-
+    public function ticketChoose(){
+        var_dump($_POST);
+        var_dump($_REQUEST['button']);
     }
+
+
+
 
 
 }
