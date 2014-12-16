@@ -4,6 +4,9 @@
 class Connection
 {
 
+
+    /*100% Работает*/
+
     #Состояние соединения с БД по умолчанию.
 
     private static $connection = null;

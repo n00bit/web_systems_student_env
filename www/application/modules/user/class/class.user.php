@@ -10,10 +10,9 @@
 class User
 {
 
-    public function __construct()
-    {
-        /*  print "Пользователь с номером ID $id";*/
-    }
+    private $auth = array();
+
+    static private $_instance = null;
 
     private $name = null;
     private $surname = null;
@@ -46,11 +45,57 @@ class User
         'email' => 'setEmail'
     );
 
+    public function __construct()
+    {
+        /*Если пользователь был авторизован, то присваиваем сохраненные данные.
+    if (isset($_SESSION['user'])) {
+      if ($_SESSION['userAuthDomain'] == $_SERVER['SERVER_NAME']) {
+        $this->auth = $_SESSION['user'];
+      }
+    }*/
+    }
+
+    private function __clone() {
+
+    }
+
+    private function __wakeup() {
+
+    }
+
     private function load($id)
     {
 
     }
 
+    static public function getInstance() {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self;
+        }
+        return self::$_instance;
+    }
+
+    /*Инициализирует объект данного класса*/
+    public static function init() {
+        self::getInstance();
+    }
+
+    /*Вовзращает авториованного пользователя
+      public static function getThis() {
+    return self::$_instance->auth;
+  }
+    */
+
+    /**
+     * Разлогинивает авторизованного пользователя.
+     */
+/*    public static function logout() {
+        self::getInstance()->auth = null;
+        unset($_SESSION['user']);
+        unset($_SESSION['cart']);
+        //Удаляем данные о корзине.
+        SetCookie('cart', '', time());
+    }*/
 
     private function setData($data)
     {
@@ -280,36 +325,4 @@ class User
     }
 
 
-}
-
-class UserFactory
-{
-
-    private static $_connect = null;
-
-    public static function where($param)
-    {
-
-    }
-
-    public static function sort($param)
-    {
-
-    }
-
-    public static function limit($param)
-    {
-
-    }
-
-    /* Appeal to BD & execute query*/
-    public static function execute($query)
-    {
-        $_connect = Connection::getInstance();
-        $status = $_connect->getConnection()->query($query);
-        if($status){
-            return 1;
-        }
-        else return 0;
-    }
 }
