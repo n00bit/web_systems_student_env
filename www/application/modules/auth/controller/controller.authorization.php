@@ -11,21 +11,11 @@
         {
             print "What's up, dock?";//детектор работоспособности
             $current_id = null;
-
-            $login = null;
-            $password = null;
-            if($_SERVER['REQUEST_METHOD']=='POST'){//времаенная обработка методов для авторизациии, ПОДЛЕЖИТ УНИЧТОЖЕНИЮ
-                $login = $_POST['login'];          //ПУТЕМ ИСКЛЮЧЕНИЯ ВОЗМОЖНОСТИ ОБРАБОТКИ GET
-                $password = $_POST['password'];
-            }
-            else{
-                $login = $_GET['login'];
-                $password = $_GET['password'];
-            }
+            $login = $_POST['login'];
+            $password = $_POST['password'];
             $userTools = $this->getUser($login);
             $user = $userTools->getDataStorage();//поучить хранилище
             $userTools->verifyLoginAndPassword($login,$password);//работа с хранилищем
-
             if (!is_null($user)) {
                 $this->signInAccount($user->getPersonalID());
                 $this->gotoUserHome($user->getPersonalID());
@@ -73,9 +63,5 @@
             $view->showLoginForm();
         }
 
-        public function showLoginFormForDimas(){//показать форму авторизации К УНИЧТОЖЕНИЮ
-            $view = new AuthorizationViewer();
-            $view->showLoginFormForDimas();
-        }
 
     }

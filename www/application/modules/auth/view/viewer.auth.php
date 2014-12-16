@@ -19,8 +19,4 @@ Class AuthorizationViewer{
         include_once "loginForm.html";
     }
 
-    public function showLoginFormForDimas(){//показать форму авторизации К УНИЧТОЖЕНИЮ
-        print "I'm ready, Dimas!";          //НЕОБХОДИМА ДЛЯ АВТОРИЗАЦИИ ДИМАСА
-        include_once "loginFormForDimas.html";
-    }
 }

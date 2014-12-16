@@ -48,5 +48,10 @@ Class Staff{
         var_dump($this->current_data_storage->getPersonalMessege());
     }
 
+    public function ticketsConstruct(){//построение интерфейса для вывода перечня тикетно
+
+
+    }
+
 
 }

@@ -3,8 +3,7 @@
 Class StaffData{//хранилище сведений о персонаже
 //персонаж - оператор одного из отделов
     private $personalData = array(); //пероснальные данные персонажа
-    private $personalTikcets = array(); //тикеты персонажа
-    private $personalMesseges = array(); //тикеты персонажа
+    private $personalWorkDate = array(); //рабочие данные персонажа
 
     public function __construct(){
 
@@ -108,8 +107,8 @@ Class StaffData{//хранилище сведений о персонаже
     }
 
     public function  getAllPersonalTiketsID(){//получить ВСЕ id
-        if(array_key_exists('ids',$this->personalTikcets) && array_key_exists('topics',$this->personalTikcets)){
-            return array($this->personalTikcets['ids'],$this->personalTikcets['topics']);
+        if(array_key_exists('TICKETS',$this->personalWorkDate)){
+            return $this->personalWorkDate['TICKETS'];
         }
         else{
             return null;
@@ -117,7 +116,12 @@ Class StaffData{//хранилище сведений о персонаже
     }
 
     public function getPersonalMessege(){//вернуть все меседжы данного тикета персонажа
-        return $this->personalMesseges;
+        if(array_key_exists('MESSAGES',$this->personalWorkDate)){
+            return $this->personalWorkDate['MESSAGES'];
+        }
+        else{
+            return null;
+        }
     }
 //набор setter-ов
 
@@ -139,27 +143,18 @@ Class StaffData{//хранилище сведений о персонаже
         }
     }
 
-    public function setTicketsID($result){//получить все тикеты персонажа
+    public function setPersonalWorkData($result, $type){//получить все тикеты персонажа
         $index = 0;
         while($temp = mysqli_fetch_array($result)) {
-            $this->personalTikcets['ids'][$index] = $temp[0];
-            $this->personalTikcets['topics'][$index] = $temp[1];
-            $index ++;
-        }
-    }
-
-    public function setPersonalMessage($result){//получить все сообщения тикета в текущем интервале
-        $index = 0;
-        while($temp = mysqli_fetch_array($result)) {
-            foreach($temp as $local_index=>$value){
-                if(preg_match('/[a-zA-Z]+/',$local_index)) {
-                    $this->personalMesseges[$index][$local_index] = $value;
+            foreach($temp as $loc_index => $value)
+                if(preg_match('/[a-zA-Z]+/',$loc_index)) {
+                    $this->personalWorkDate[$type][$index][$loc_index] = $value;
                 }
-            }
             $index ++;
         }
-
+       // var_dump($this->personalWorkDate);
     }
+
 
  }
 

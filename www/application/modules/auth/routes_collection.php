@@ -23,7 +23,5 @@
     $router->any('/:home',$ar2,$pattern_params_collection);//В ДАЛЬНЕЙШЕМ POST
     $router->get('/login', $ar3, $ar5);
 
-    $router->get('/LoginShDL', $ar4, $ar5);//маршруты К УНИЧТОЖЕНИЮ
-    $router->get('/Speclogin', $ar1, $ar5);//НЕОБХОДИМЫ ДЛЯ АВТОРИЗАЦИИ ЧЕРЕЗ МЕТОД GET ДЛЯ ДИМАСА ШАМРИКА
 
 
