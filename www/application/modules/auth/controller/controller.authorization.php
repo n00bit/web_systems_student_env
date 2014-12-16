@@ -22,9 +22,9 @@
                 $login = $_GET['login'];
                 $password = $_GET['password'];
             }
-
             $userTools = $this->getUser($login);
-            $user = $userTools->verifyLoginAndPassword($login,$password);
+            $user = $userTools->getDataStorage();//поучить хранилище
+            $userTools->verifyLoginAndPassword($login,$password);//работа с хранилищем
 
             if (!is_null($user)) {
                 $this->signInAccount($user->getPersonalID());

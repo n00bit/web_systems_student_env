@@ -9,6 +9,8 @@ Class StaffModel{//инструменты для работы с БД
     private $password = null;//пароль персонажа
     private $id = null;//id персонажа
 
+    private $dataStorage = null;
+
     /*Если static, то обращение self::*/
     private function installConnection(){//установка соединения с базой данных(через уже существующий класс работы с базой данных)
         self::$connection_container = Connection::getInstance();
@@ -24,9 +26,7 @@ Class StaffModel{//инструменты для работы с БД
         $this->password = $password;
         $result = $this->getStaffRecord();//получить все данные о персонаже
         if(!is_null($result)){//логин и пароль корректны
-            $staff = new StaffData();//построение хранилища данных
-            $staff->setAllData($result);//запомнить все все персональные данные
-            return $staff;
+            $this->dataStorage->setAllData($result);//запомнить все все персональные данные
         }
         else{//некорректные логин или пароль
             return null;
@@ -40,15 +40,18 @@ Class StaffModel{//инструменты для работы с БД
         return $result;
     }
 
-    public function getAllPersonalScore($id){//возвращение данных об оценках деятельности персонажа
-        $data = new StaffData();
-        $personalScores = $this->getStaffScore($id);
-        $data->setScoreData($personalScores);
-        return $data;
+    public function getDataStorage(){//вернуть храниище данных
+        $this->dataStorage= new StaffData();//построить хранилище
+        return $this->dataStorage;
     }
 
+    public function getAllPersonalScore($id){//возвращение данных об оценках деятельности персонажа
+        $personalScores = $this->getStaffScore($id);
+        $this->dataStorage->setScoreData($personalScores);
+    }
 
     private function getStaffScore($id){//получение средних оценок персонажа
+        var_dump($id);
         $current_connection = $this->installConnection();
         $query="SELECT
 	(AVG(r.operator_rating_speed)+AVG(t.rating_speed))/2,
@@ -61,6 +64,55 @@ INNER JOIN ticket t
 WHERE
 	r.operator_id = $id";
         $result =  $current_connection->query($query);//выполнение запроса
+        return $result;
+    }
+
+    public function getAllPersonalTikcets($id){//возвращение данных об оценках деятельности персонажа
+        $personalTikcets = $this->getPersonalTikets($id);
+        $this->dataStorage->setTicketsID($personalTikcets);
+    }
+
+    private function getPersonalTikets($id){//получение всхе тикетов персонажа
+        var_dump($id);
+        $current_connection = $this->installConnection();
+        $query = "SELECT
+	t.id,
+	t.topic
+FROM ticket t
+WHERE
+	t.status = 'OPEN'  AND
+	(t.operator_id = $id OR t.operator_id = null)";
+        $result = $current_connection->query($query);
+        return $result;
+    }
+
+    public function getPersonalMessegesBetween($id, $beginDate, $EndDate){////получение сообщений перснажа
+        $personalMessage = $this->getPersonalMesseges($id, $beginDate, $EndDate);
+        $this->dataStorage->setPersonalMessage($personalMessage);
+    }
+
+    private function getPersonalMesseges($id, $beginDate, $EndDate){//получение сообщений перснажа
+        var_dump($id);
+        $current_connection = $this->installConnection();
+        $query = "SELECT
+	m.id,
+	m.text,
+	m.date,
+	s.name,
+	s.surname,
+	s.patronymic
+FROM
+	message m
+INNER JOIN ticket t
+	ON t.id=m.ticket_id
+INNER JOIN staff s
+	ON t.operator_id = s.id
+WHERE
+	m.ticket_id = $id AND
+	m.direct = 'OPERAT' AND
+ 	m.date BETWEEN '$beginDate' AND '$EndDate'";
+        $result = $current_connection->query($query);
+        var_dump($result);
         return $result;
     }
 }
