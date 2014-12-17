@@ -32,7 +32,27 @@ Class Staff{
 
     }
 
-    public function ticketsConstruct(){//действие после авторизации
+    public function sendMessage(){//Отправка сообщения
+        session_start();
+        $text=$_POST['text'];
+        $tickel = $_SESSION['ticket_id'];
+        $this->current_data_worker =  new StaffModel();
+        $this->current_data_worker->sendNewMessege($tickel, $text);
+    }
+
+    public function closeTikcet($value){//Закрытие тикета
+        $this->current_data_worker =  new StaffModel();
+        $this->current_data_storage = $this->current_data_worker->getDataStorage();//тестирование запроса оценок
+
+        $this->current_data_worker->getAllPersonalTikcets($this->current_id);
+        $ticket=$this->current_data_storage->getPersonalTiket($value);
+
+        $this->current_data_worker->killTicket($ticket['id']);
+
+    }
+
+
+    public function ticketsConstruct(){//действие после авторизации/вызов демонстрации всех тикетов
         $id = $this->current_id;
         $this->current_data_worker = new StaffModel();
 
@@ -41,22 +61,62 @@ Class Staff{
         $this->current_data_worker->getAllPersonalScore($id);
         $this->current_data_worker->getAllPersonalTikcets($id);
 
-        $this->current_data_worker->getPersonalMessegesBetween(3,'2012-01-01','2013-01-01');
-
-
-//        var_dump($this->current_data_storage->getPersonalScore());
-//        var_dump($this->current_data_storage->getAllPersonalTiketsID());
-//        var_dump($this->current_data_storage->getPersonalMessege());
         $personalScore = $this->current_data_storage->getPersonalScore();
-        $personalTickets =$this->current_data_storage->getAllPersonalTiketsID();
+        $personalTickets =$this->current_data_storage->getAllPersonalTikets();
         $viewer = new StaffViewer();
         $viewer->showPersonalData($personalScore);
         $viewer->showAllTickets($personalTickets);
     }
 
-    public function ticketChoose(){
-        var_dump($_POST);
-        var_dump($_REQUEST['button']);
+    private function showMessge($value){//вызов демонстрации ипостроения сообщений
+        $this->current_data_worker =  new StaffModel();
+        $this->current_data_storage = $this->current_data_worker->getDataStorage();//тестирование запроса оценок
+
+        $this->current_data_worker->getAllPersonalTikcets($this->current_id);
+
+        $ticket=$this->current_data_storage->getPersonalTiket($value);
+
+        $this->current_data_worker->getPersonalMessegesBetween($ticket['id'],'1000-01-01','3000-01-01');
+
+        $personalMesseges['Request'] = $this->current_data_storage->getFromPersonalMessege();
+
+        $personalMesseges['Respond'] = $this->current_data_storage->getToPersonalMessege();
+
+
+
+        $viewer = new StaffViewer();
+        $viewer->showAllMesseges($personalMesseges);
+    }
+
+    private function newMessege($value){//вызов демонстрации ипостроения сообщений
+        $this->current_data_worker =  new StaffModel();
+        $this->current_data_storage = $this->current_data_worker->getDataStorage();//тестирование запроса оценок
+
+        $this->current_data_worker->getAllPersonalTikcets($this->current_id);
+        $ticket=$this->current_data_storage->getPersonalTiket($value);
+
+        session_start();
+        $_SESSION['ticket_id'] = $ticket['id'];
+
+        $viewer = new StaffViewer();
+        $viewer->showWriteFormMessege();
+    }
+
+    public function ticketChoose(){//обработка нажатия на кнопку
+        $temp = $_POST;
+        foreach($temp as $index => $value ){
+            switch($index){
+                case "showMesseges":{
+                    $this->showMessge($value);
+                }break;
+                case "newMessege":{
+                    $this->newMessege($value);
+                }break;
+                case "CloseTicket":{
+                    $this->closeTikcet($value);
+                }break;
+            }
+        }
     }
 
 

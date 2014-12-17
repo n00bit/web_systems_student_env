@@ -9,15 +9,15 @@
 
         public function baseAuthorization()//авторизация
         {
-            print "What's up, dock?";//детектор работоспособности
+            print "What's up dock?";
             $current_id = null;
             $login = $_POST['login'];
             $password = $_POST['password'];
             $userTools = $this->getUser($login);
             $user = $userTools->getDataStorage();//поучить хранилище
-            $userTools->verifyLoginAndPassword($login,$password);//работа с хранилищем
+            $controller = $userTools->verifyLoginAndPassword($login,$password);//работа с хранилищем и возвращение соответствующего я контроллеа
             if (!is_null($user)) {
-                $this->signInAccount($user->getPersonalID());
+                $this->signInAccount($user->getPersonalID(),$controller);
                 $this->gotoUserHome($user->getPersonalID());
             }
             else {
@@ -34,9 +34,13 @@
             }
         }
 
-        private function signInAccount($id){//сохранение данных залогиненного персонажа в сессии
+        private function signInAccount($id, $contoller){//сохранение данных залогиненного персонажа в сессии
             session_start();
             $_SESSION['id'] = $id;
+            $account = new $contoller();
+            var_dump($contoller);
+            $account->ticketsConstruct();
+
 
         }
 

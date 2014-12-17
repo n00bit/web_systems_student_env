@@ -4,7 +4,6 @@
 Class StaffModel{//инструменты для работы с БД
 
     private static $connection_container = null;
-
     private $login = null;//логин персонажа
     private $password = null;//пароль персонажа
     private $id = null;//id персонажа
@@ -27,6 +26,7 @@ Class StaffModel{//инструменты для работы с БД
         $result = $this->getStaffRecord();//получить все данные о персонаже
         if(!is_null($result)){//логин и пароль корректны
             $this->dataStorage->setAllData($result);//запомнить все все персональные данные
+            return "Staff";//вернуть имя соответствующего контроллека
         }
         else{//некорректные логин или пароль
             return null;
@@ -94,14 +94,15 @@ Class StaffModel{//инструменты для работы с БД
     }
 
     public function getPersonalMessegesBetween($id, $beginDate, $EndDate){////получение сообщений перснажа
-        $personalMessage = $this->getPersonalMesseges($id, $beginDate, $EndDate);
-        $this->dataStorage->setPersonalWorkData($personalMessage,"MESSAGES");
+        $personalMessage = $this->getAbonentMesseges ($id, $beginDate, $EndDate);
+        $this->dataStorage->setPersonalWorkData($personalMessage,"MESSAGES FROM PERSON");
+        $personalMessage = $this->getPersonalMesseges ($id, $beginDate, $EndDate);
+        $this->dataStorage->setPersonalWorkData($personalMessage,"MESSAGES TO PERSON");
     }
 
     private function getPersonalMesseges($id, $beginDate, $EndDate){//получение сообщений перснажа
         $current_connection = $this->installConnection();
         $query = "SELECT
-                    m.id,
                     m.text,
                     m.date,
                     s.name,
@@ -120,6 +121,35 @@ Class StaffModel{//инструменты для работы с БД
         $result = $current_connection->query($query);
         return $result;
     }
+
+    private function getAbonentMesseges($id, $beginDate, $EndDate){//получение сообщений перснажа
+        $current_connection = $this->installConnection();
+        $query = "SELECT
+                    m.text,
+                    m.date,
+                    s.name,
+                    s.surname,
+                    s.patronymic
+                FROM
+                    message m
+                INNER JOIN ticket t
+                    ON t.id=m.ticket_id
+                INNER JOIN subscriber s
+                    ON t.subscriber_id = s.id
+                WHERE
+                    m.ticket_id = $id AND
+                    m.direct = 'ABON' AND
+                    m.date BETWEEN '$beginDate' AND '$EndDate'";
+        $result = $current_connection->query($query);
+        return $result;
+    }
+
+    public function killTicket($ticket_id){//написание нового сообщения
+        $current_connection = $this->installConnection();
+        $query = "UPDATE ticket t SET t.status='CLOSED' WHERE t.id= $ticket_id";
+        $result = $current_connection->query($query);
+    }
+
 
     public function sendNewMessege($ticket_id, $messageText){//написание нового сообщения
         $current_connection = $this->installConnection();

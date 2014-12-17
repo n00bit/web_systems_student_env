@@ -19,7 +19,7 @@
 
     $router = Router::getInstance();
 
-    $router->post('/login',$ar1,$pattern_params_collection);
+    $router->post('/staff_home_page',$ar1,$pattern_params_collection);
     $router->any('/:home',$ar2,$pattern_params_collection);//В ДАЛЬНЕЙШЕМ POST
     $router->get('/login', $ar3, $ar5);
 

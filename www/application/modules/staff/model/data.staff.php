@@ -106,7 +106,7 @@ Class StaffData{//хранилище сведений о персонаже
         }
     }
 
-    public function  getAllPersonalTiketsID(){//получить ВСЕ id
+    public function  getAllPersonalTikets(){//получить ВСЕ тикеты
         if(array_key_exists('TICKETS',$this->personalWorkDate)){
             return $this->personalWorkDate['TICKETS'];
         }
@@ -115,9 +115,30 @@ Class StaffData{//хранилище сведений о персонаже
         }
     }
 
-    public function getPersonalMessege(){//вернуть все меседжы данного тикета персонажа
-        if(array_key_exists('MESSAGES',$this->personalWorkDate)){
-            return $this->personalWorkDate['MESSAGES'];
+    public function  getPersonalTiket($id){//получить 1 тикет по индексу в хранилище
+        if(array_key_exists('TICKETS',$this->personalWorkDate)){
+            if(array_key_exists($id,$this->personalWorkDate['TICKETS'])) {
+                return $this->personalWorkDate['TICKETS'][$id];
+            }
+        }
+        else{
+            return null;
+        }
+    }
+
+
+    public function getToPersonalMessege(){//вернуть все меседжы данного тикета персонажа
+        if(array_key_exists('MESSAGES TO PERSON',$this->personalWorkDate)){
+            return $this->personalWorkDate['MESSAGES TO PERSON'];
+        }
+        else{
+            return null;
+        }
+    }
+
+    public function getFromPersonalMessege(){//вернуть все меседжы данного тикета персонажа
+        if(array_key_exists('MESSAGES FROM PERSON',$this->personalWorkDate)){
+            return $this->personalWorkDate['MESSAGES FROM PERSON'];
         }
         else{
             return null;
@@ -152,7 +173,7 @@ Class StaffData{//хранилище сведений о персонаже
                 }
             $index ++;
         }
-       // var_dump($this->personalWorkDate);
+
     }
 
 
