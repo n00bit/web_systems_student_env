@@ -25,5 +25,5 @@ class UserModel{
         $this->personalInfo['login'][] = $login;
         $this->personalInfo['password'][] = $password;
     }
-
+/*Подключение кБД здесь и запросы к бд*/
 }

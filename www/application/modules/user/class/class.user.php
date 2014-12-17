@@ -106,6 +106,9 @@ class User
             }
         }
     }
+    /**
+     * 1.
+     * */
 
     public function getName()
     {
