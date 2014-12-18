@@ -2,12 +2,31 @@
 Class UserController{
 
     private $current_id = null;
+    private static $localStorageInfo = array();
 
-    public function __construct($id){
-        print "Юзер с номером ID $id";
+
+    private static function testDataLogin(){
+        if(isset($_COOKIE)||isset($_SESSION)){
+            return true;
+        }
+        else return false;
     }
 
 
+    public function __construct(){
+    if(self::testDataLogin()){
+        session_start();
+        $this->current_id = $_SESSION['id'];
+        }
+    }
+
+    private function __clone(){
+
+    }
+
+    private function __wakeup(){
+
+    }
 
 
 }

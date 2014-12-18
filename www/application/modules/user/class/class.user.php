@@ -14,6 +14,7 @@ class User
 
     static private $_instance = null;
 
+    private $id = null;
     private $name = null;
     private $surname = null;
     private $patronymic = null;
@@ -30,6 +31,7 @@ class User
     private $email = null;
 
     private $mapping = array(
+        'id' => 'setId',
         'name' => 'setName',
         'surname' => 'setSurname',
         'patronymic' => 'setPatronymic',
@@ -55,11 +57,13 @@ class User
     }*/
     }
 
-    private function __clone() {
+    private function __clone()
+    {
 
     }
 
-    private function __wakeup() {
+    private function __wakeup()
+    {
 
     }
 
@@ -68,34 +72,13 @@ class User
 
     }
 
-    static public function getInstance() {
+    static public function getInstance()
+    {
         if (is_null(self::$_instance)) {
             self::$_instance = new self;
         }
         return self::$_instance;
     }
-
-    /*Инициализирует объект данного класса*/
-    public static function init() {
-        self::getInstance();
-    }
-
-    /*Вовзращает авториованного пользователя
-      public static function getThis() {
-    return self::$_instance->auth;
-  }
-    */
-
-    /**
-     * Разлогинивает авторизованного пользователя.
-     */
-/*    public static function logout() {
-        self::getInstance()->auth = null;
-        unset($_SESSION['user']);
-        unset($_SESSION['cart']);
-        //Удаляем данные о корзине.
-        SetCookie('cart', '', time());
-    }*/
 
     private function setData($data)
     {
@@ -106,89 +89,87 @@ class User
             }
         }
     }
-    /**
-     * 1.
-     * */
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getName()
     {
-        $name = $this->name;
-        return $name;
+        return $this->name;
     }
 
     public function getSurName()
     {
-        $surname = $this->surname;
-        return $surname;
+        return $this->surname;
     }
 
     public function getPatronymic()
     {
-        $patron = $this->patronymic;
-        return $patron;
+        return $this->patronymic;
     }
 
     public function getbirthday()
     {
-        $birthday = $this->birthday;
-        return $birthday;
+        return $this->birthday;
     }
 
     public function getGender()
     {
-        $gender = $this->gender;
-        return $gender;
+        return $this->gender;
     }
 
     public function getPassportSeries()
     {
-        $PassportSeries = $this->PassportSeries;
-        return $PassportSeries;
+        return $this->PassportSeries;
     }
 
     public function getPassportNumber()
     {
-        $PassportNumber = $this->PassportNumber;
-        return $PassportNumber;
+        return $this->PassportNumber;
     }
 
     public function getPassportAddress()
     {
-        $pAdr = $this->PassportAddress;
-        return $pAdr;
+        return $this->PassportAddress;
     }
 
     public function getPassportGetDate()
     {
-        $PassportGetDate = $this->PassportGetDate;
-        return $PassportGetDate;
+        return $this->PassportGetDate;
     }
 
     public function getPhoneContact()
     {
-        $phoneCont = $this->phoneContact;
-        return $phoneCont;
+        return $this->phoneContact;
     }
 
     public function getLoginPhone()
     {
-        $login = $this->loginPhone;
-        return $login;
+        return $this->loginPhone;
     }
 
     public function getPassword()
     {
-        $pass = $this->password;
-        return $pass;
+        return $this->password;
     }
 
     public function getEmail()
     {
-        $email = $this->email;
-        return $email;
+        return $this->email;
     }
 
     /***SET***/
+
+    public function setId($id)
+    {
+        if (is_numeric($id)) {
+            $this->id = $id;
+        } else {
+            throw new Exception('Wrong id');
+        }
+    }
 
     public function setName($pName)
     {
@@ -258,8 +239,7 @@ class User
         $pattern = '\w+';
         if (preg_match($pattern, $pAdr)) {
             $this->PassportAddress = $pAdr;
-        }
-        else {
+        } else {
             throw new Exception('Wrong address');
         }
     }
@@ -269,8 +249,7 @@ class User
         $pattern = '/\d{2}[.|,|\-|\/]\d{2}[.|,|\-|\/]\d{4}/';
         if (preg_match($pattern, $pPassportGetDate)) {
             $this->PassportGetDate = $pPassportGetDate;
-        }
-        else {
+        } else {
             throw new Exception('Wrong date get Passport');
         }
     }
@@ -295,23 +274,29 @@ class User
         8 927 12 12 888
         8 927 12 555 12
         8 927 123 8 123*/
-        if(preg_match($pattern,$phoneCont)) {
+        if (preg_match($pattern, $phoneCont)) {
             $this->phoneContact = $phoneCont;
-        }
-        else {
+        } else {
             throw new Exception('Wrong contact phone number');
         }
     }
 
-    /*Set'eр на логин не нужен. его нельзя изменить.*/
+    public function setLogin($login){
+        $pattern = '/\d{6}/';
+        if(preg_match($pattern,$login)){
+            $this->loginPhone;
+        }
+        else{
+            throw new Exception('Wrong login');
+        }
+    }
 
     public function setPassword($pass)
     {
         $pattern = '/\w{20}/';
-        if(preg_match($pattern,$pass)) {
+        if (preg_match($pattern, $pass)) {
             $this->password = $pass;
-        }
-        else {
+        } else {
             throw new Exception('Wrong password');
         }
     }
@@ -319,13 +304,11 @@ class User
     public function setEmail($email)
     {
         $pattern = '/[^(\w)|(\@)|(\.)|(\-)]/';
-        if(preg_match($pattern, $email)) {
+        if (preg_match($pattern, $email)) {
             $this->email = $email;
-        }
-        else {
+        } else {
             throw new Exception('Wrong E-mail');
         }
     }
-
 
 }
