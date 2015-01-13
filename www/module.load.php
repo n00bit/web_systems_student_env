@@ -4,6 +4,22 @@
 
 Class Loader
 {
+    private static $_instance = null;
+
+    private function __construct(){}
+
+    private function __clone(){}
+
+    private function __wakeup(){}
+
+    public static function getInstance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new Loader();
+        }
+        return self::$_instance;
+    }
+
     public function load_all_modules()
     {
         $this->includeFunc(glob("application/core/*.php"));
@@ -22,6 +38,9 @@ Class Loader
         }
         foreach ($pattern as $filename) {
             include_once $filename;
+            print_r ($filename);
+            print '<br>';
+
         }
     }
 
